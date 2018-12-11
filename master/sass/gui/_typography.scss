@@ -1,6 +1,10 @@
-/* Blockquote */
+/* Blockquotes */
 blockquote {
+    border-#{$left}: 5px solid #eee;
+    margin: 0 0 1rem 0;
+    padding: 0.5rem 1rem;
 	font-size: 1em;
+
 	&.with-borders {
 		border-radius: 6px;
 		border-top: 1px solid #DFDFDF;
@@ -8,8 +12,13 @@ blockquote {
 		border-#{$left}: 1px solid #ECECEC;
 		border-#{$right}: 1px solid #ECECEC;
 		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.04);
-		padding: 15px 20px;
+		padding: 1.3rem;
 	}
+}
+
+/* Small */
+small, .small {
+	font-size: 70%;
 }
 
 /* Paragraphs */
@@ -21,14 +30,8 @@ p {
 		font-size: 1.6em;
 		line-height: 1.5em;
 	}
-	&.short {
-		margin-bottom: 0;
-	}
-	&.tall {
-		margin-bottom: 20px;
-	}
-	&.taller {
-		margin-bottom: 40px;
+	&.lead {
+		line-height: 1.8rem;
 	}
 	.alternative-font {
 		display: inline-block;
@@ -46,7 +49,7 @@ a, a:hover, a:focus {
 
 /* Drop Caps */
 p.drop-caps {
-	&:first-child:first-letter {
+	&:first-letter {
 		float: $left;
 		font-size: 75px;
 		line-height: 60px;
@@ -56,13 +59,18 @@ p.drop-caps {
 		font-family: Georgia;
 	}
 
-	&.drop-caps-style-2:first-child:first-letter {
+	&.drop-caps-style-2:first-letter {
 		background-color: #CCC;
 		color: #FFF;
 		padding: 6px;
 		margin-#{$right}: 5px;
 		border-radius: 4px;
 	}
+}
+
+/* Default Font Style */
+.default-font {
+	font-family: $font-primary;
 }
 
 /* Alternative Font Style */

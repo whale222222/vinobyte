@@ -1,7 +1,9 @@
 /* Parallax */
 .parallax {
+	background-color: transparent;
 	background-position: 50% 50%;
-	background-repeat: no-repeat;
+	background-repeat: repeat;
+	background-attachment: fixed;
 	margin: 70px 0;
 	padding: 50px 0;
 	position: relative;
@@ -27,23 +29,8 @@
 			#{$left}: -5px;
 		}
 	}
-
-	&.parallax-ready {
-		background-attachment: fixed;
-	}
-
 	&.parallax-disabled {
 		background-attachment: scroll !important;
 		background-position: 50% 50% !important;
 	}
-}
-
-/* Responsive */
-@media (max-width: 991px) {
-
-	.parallax {
-		background-attachment: scroll !important;
-		background-position: 50% 50% !important;
-	}	
-
 }

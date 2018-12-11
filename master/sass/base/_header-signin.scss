@@ -1,10 +1,18 @@
 /* Mega Menu (Signin/SignUp) */
 #header .header-nav-main nav > ul > li.dropdown-mega.dropdown-mega-signin {
+	label {
+		font-size: 0.9rem;
+		color: #777;
+	}
 	.dropdown-menu {
 		width: 40%;
 		#{$right}: 15px;
 		#{$left}: auto;
 		border-radius: corner-values(6px 0 6px 6px);
+		&, a {
+			padding: 0;
+			transform: translate3d(0, 2px, 0);
+		}
 	}
 	.fa-user {
 		margin-#{$right}: 5px;
@@ -16,9 +24,7 @@
 	.sign-up-info, .log-in-info {
 		text-align: center;
 		display: block;
-	}
-	&.open {
-
+	    font-size: 0.9rem;
 	}
 	&.signin {
 		.signin-form {
@@ -45,6 +51,9 @@
 		}
 		.recover-form {
 			display: block;
+			p {
+				font-size: 0.9rem;
+			}
 		}
 	}
 	&.logged {
@@ -70,7 +79,7 @@
 			}
 		}
 		.list-account-options {
-			list-style: square;
+			list-style: none;
 			margin: 6px 0 0;
 			padding: 0;
 			a:hover {

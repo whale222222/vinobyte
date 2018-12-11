@@ -1,7 +1,7 @@
 /*
 Name: 			theme-shop.css
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		@@version
+Theme Version:	@@version
 */
 
 //COMMON IMPORTS
@@ -18,11 +18,7 @@ Version: 		@@version
 
 /* Shop - Base */
 .shop {
-	margin-top: -10px;
-	ul.products {
-		margin: 0;
-		padding: 25px 0;
-		list-style: none;
+	.products {
 		&:after {
 			content: ".";
 			display: block;
@@ -38,7 +34,7 @@ Version: 		@@version
 				text-decoration: none;
 			}
 			.add-to-cart-product {
-				@include transition (all 0.2s);
+				transition: all 0.2s;
 				position: absolute;
 				top: 0;
 				#{$left}: 0;
@@ -48,10 +44,9 @@ Version: 		@@version
 				color: #FFF;
 				background: #222;
 				z-index: 1;
-				filter: alpha(opacity = 0);
 				opacity: 0;
 				-webkit-transform: translate3d(0, 0, 0);
-				.fa, .icons {
+				.fa, .fas, .far, .fal, .fab, .icons {
 					margin-#{$right}: 3px;
 					font-size: 1.1em;
 				}
@@ -101,10 +96,9 @@ Version: 		@@version
 	}
 }
 
-
 /* Product Info */
 .product-info {
-	@include transition (all 0.2s);
+	transition: all 0.2s;
 	border-radius: 6px;
 	padding: 0;
 	position: relative;
@@ -133,7 +127,7 @@ Version: 		@@version
 		}
 	}
 	img {
-		@include transition (all 0.2s);
+		transition: all 0.2s;
 		border-radius: corner-values(6px 6px 0 0);
 	}
 	h4 {
@@ -153,7 +147,7 @@ Version: 		@@version
 		display: block;
 		position: relative;
 		&:before {
-			@include transition (all 0.2s);
+			transition: all 0.2s;
 			content: "";
 			display: block;
 			position: absolute;
@@ -164,7 +158,6 @@ Version: 		@@version
 			background: #333;
 			width: 100%;
 			height: 100%;
-			filter: alpha(opacity = 0);
 			opacity: 0;
 			border-radius: corner-values(6px 6px 0 0);
 		}
@@ -197,9 +190,8 @@ Version: 		@@version
 		text-align: $right;
 		width: 45%;
 		em {
-			@include transition (all 0.2s ease 0s);
+			transition: all 0.2s ease 0s;
 			#{$left}: 0%;
-			filter: alpha(opacity = 0);
 			opacity: 0;
 		}
 	}
@@ -208,10 +200,9 @@ Version: 		@@version
 		margin-#{$left}: 2%;
 		width: 53%;
 		em {
-			@include transition (all 0.2s ease 0s);
+			transition: all 0.2s ease 0s;
 			#{$right}: 0%;
 			font-weight: 600;
-			filter: alpha(opacity = 0);
 			opacity: 0;
 		}
 	}
@@ -271,19 +262,17 @@ Version: 		@@version
 		.product-info-content {
 			text-align: center;
 			h4 {
-				@include transition (all 0.2s);
+				transition: all 0.2s;
 				color: #FFF;
 				position: relative;
 				top: -25%;
-				filter: alpha(opacity = 0);
 				opacity: 0;
 			}
 			.date {
-				@include transition (all 0.2s);
+				transition: all 0.2s;
 				position: relative;
 				top: 25%;
 				display: block;
-				filter: alpha(opacity = 0);
 				opacity: 0;
 			}
 		}
@@ -291,11 +280,10 @@ Version: 		@@version
 			top: 30%;
 		}
 		.label {
-			@include transition (all 0.2s);
+			transition: all 0.2s;
 			clear: both;
 			display: inline-block;
 			margin-top: 15px;
-			filter: alpha(opacity = 0);
 			opacity: 0;
 		}
 		&:hover {
@@ -471,11 +459,13 @@ Version: 		@@version
 			border-top: 1px solid #DCDCDC;
 			padding: 8px 10px;
 			&.actions {
-				padding: 20px 10px;
+				padding: 20px 0;
 			}
 		}
-		.remove .fa {
-			font-size: 1.5em;
+		.remove {
+			.fa, .fas, .far, .fal, .fab {
+				font-size: 1.5em;
+			}
 		}
 		.coupon {
 			float: $left;
@@ -516,7 +506,7 @@ Version: 		@@version
 
 /* Product Thumb Info */
 .product-thumb-info {
-	@include transition (all 0.2s);
+	transition: all 0.2s;
 	border-radius: 6px;
 	padding: 0;
 	position: relative;
@@ -546,7 +536,7 @@ Version: 		@@version
 		}
 	}
 	img {
-		@include transition (all 0.2s);
+		transition: all 0.2s;
 		border-radius: corner-values(6px 6px 0 0);
 	}
 	h4 {
@@ -580,7 +570,7 @@ Version: 		@@version
 		display: block;
 		position: relative;
 		&:before {
-			@include transition (all 0.2s);
+			transition: all 0.2s;
 			content: "";
 			display: block;
 			position: absolute;
@@ -591,7 +581,6 @@ Version: 		@@version
 			background: #171717;
 			width: 100%;
 			height: 100%;
-			filter: alpha(opacity = 0);
 			opacity: 0;
 			border-radius: corner-values(6px 6px 0 0);
 		}
@@ -607,7 +596,6 @@ Version: 		@@version
 		#{$right}: 0;
 		text-align: center;
 		color: #FFF;
-		filter: alpha(opacity = 0);
 		opacity: 0;
 	}
 	&:hover .product-thumb-info-act {

@@ -1,6 +1,6 @@
 /* Dividers */
 hr {
-	@include background-image(linear-gradient(left, transparent, #DBDBDB, transparent));
+	background-image: linear-gradient(to $left, transparent, #DBDBDB, transparent);
 	border: 0;
 	height: 1px;
 	margin: 22px 0;
@@ -13,11 +13,17 @@ hr {
 	&.taller {
 		margin: 66px 0;
 	}
+	&.gradient-to-right {
+		background-image: linear-gradient(to $left, #DBDBDB, transparent);
+	}
+	&.gradient-to-left {
+		background-image: linear-gradient(to $left, transparent, #DBDBDB);
+	}
 	&.solid {
 		background: #DBDBDB;
 	}
 	&.light {
-		@include background-image(linear-gradient(left, transparent, rgba(255, 255, 255, 0.15), transparent));
+		background-image: linear-gradient(to $left, transparent, rgba(255, 255, 255, 0.15), transparent);
 	}
 	&.invisible {
 		background: none;
@@ -28,7 +34,7 @@ hr {
 	border: 0;
 	height: 1px;
 	margin: 44px auto;
-	@include background-image(linear-gradient(left, transparent, #DBDBDB, transparent));
+	background-image: linear-gradient(to $left, transparent, #DBDBDB, transparent);
 	text-align: center;
 	position: relative;
 	clear: both;
@@ -37,10 +43,8 @@ hr {
 		margin: 66px auto;
 	}
 
-	.fa, .icons {
+	.fa, .fas, .far, .fal, .fab, .icons {
 		text-align: center;
-		-moz-border-radius: 50px;
-		-webkit-border-radius: 50px;
 		background: #FFF;
 		border-radius: 50px;
 		color: #a9a9a9;
@@ -53,7 +57,7 @@ hr {
 		font-size: 20px;
 		margin: 0 auto 0 -25px;
 		top: -25px;
-		left: 50%;
+		#{$left}: 50%;
 		z-index: 1;
 	}
 
@@ -62,25 +66,25 @@ hr {
 	}
 
 	&.divider-icon-sm {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			width: 30px;
 			height: 30px;
 			line-height: 30px;
 			top: -15px;
 			font-size: 15px;
-			margin-left: -16px;
+			margin-#{$left}: -16px;
 		}
 	}
 
 	&.divider-icon-lg {
 		margin: 86px 0;
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			width: 60px;
 			height: 60px;
 			line-height: 60px;
 			top: -30px;
 			font-size: 30px;
-			margin-left: -30px;
+			margin-#{$left}: -30px;
 		}
 
 		&.taller {
@@ -97,47 +101,47 @@ hr {
 	}
 
 	&.divider-left {
-		.fa, .icons {
-			left: 0;
+		.fa, .fas, .far, .fal, .fab, .icons {
+			#{$left}: 0;
 			margin-left: 0;
 			margin-right: 0;
-			right: auto;
+			#{$right}: auto;
 		}
 	}
 
 	&.divider-right {
-		.fa, .icons {
-			left: auto;
+		.fa, .fas, .far, .fal, .fab, .icons {
+			#{$left}: auto;
 			margin-left: 0;
 			margin-right: 0;
-			right: 0;
+			#{$right}: 0;
 		}
 	}
 
 	&.divider-style-2 {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			background: #f4f4f4;
 			color: #a9a9a9;
 		}
 	}
 
 	&.divider-style-3 {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			border: 1px solid #CECECE;
 		}
 	}
 
 	&.divider-style-4 {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			border: 1px solid #CECECE;
 			&:after {
 				border: 3px solid #f4f4f4;
 				border-radius: 50%;
-				box-sizing: initial;
+				box-sizing: content-box;
 				content: "";
 				display: block;
 				height: 100%;
-				left: -4px;
+				#{$left}: -4px;
 				padding: 1px;
 				position: absolute;
 				top: -4px;
@@ -164,9 +168,9 @@ hr {
 		}
 
 		&.divider-small-right {
-			text-align: right;
+			text-align: $right;
 			hr {
-				margin-left: auto;
+				margin-#{$left}: auto;
 			}
 		}
 
@@ -202,7 +206,7 @@ hr, .divider {
 		background: none;
 		position: relative;
 		&:after {
-			border: 1px dashed #DBDBDB;
+			border-top: 1px dashed #DBDBDB;
 			content: "";
 			display: block;
 			height: 0;

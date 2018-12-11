@@ -309,6 +309,28 @@
 	}
 }
 
+/* Transparent Background */
+.testimonial {
+	&.testimonial-trasnparent-background {
+		blockquote {
+			background: transparent !important;
+		}
+	}
+}
+
+/* Alternarive Font */
+.testimonial {
+	&.testimonial-alternarive-font {
+		blockquote {
+			p {
+				font-family: Georgia, serif;
+				font-style: italic;
+				font-size: 1.2em;
+			}
+		}
+	}
+}
+
 /* Light */
 .section-text-light {
 	.testimonial {

@@ -1,7 +1,7 @@
 /* Icon Featured */
 .icon-featured {
 	display: inline-block;
-	font-size: 0px;
+	font-size: 0;
 	margin: 15px;
 	width: 110px;
 	height: 110px;
@@ -10,7 +10,7 @@
 	position: relative;
 	z-index: 1;
 	color: #FFF;
-	font-size: 40px;
+	font-size: 35px;
 	line-height: 110px;
 	&:after {
 		pointer-events: none;
@@ -19,8 +19,6 @@
 		height: 100%;
 		border-radius: 50%;
 		content: '';
-		-webkit-box-sizing: content-box; 
-		-moz-box-sizing: content-box; 
 		box-sizing: content-box;
 	}
 }
@@ -28,8 +26,8 @@
 /* Featured Box */
 .featured-box {
 	background: #F5F5F5;
-	@include background(linear-gradient(to bottom, #FFF 1%, #fcfcfc 98%) repeat scroll 0 0 rgba(0, 0, 0, 0));
-	@include box-sizing(border-box);
+	background: linear-gradient(to bottom, #FFF 1%, #fcfcfc 98%) repeat scroll 0 0 rgba(0, 0, 0, 0);
+	box-sizing: border-box;
 	border-bottom: 1px solid #DFDFDF;
 	border-#{$left}: 1px solid #ECECEC;
 	border-radius: 8px;
@@ -166,7 +164,7 @@
 
 	.icon-featured {
 	    display: inline-block;
-	    font-size: 40px;
+	    font-size: 35px;
 	    height: 45px;
 	    line-height: 45px;
 	    padding: 0;
@@ -224,7 +222,7 @@
 			&:after {
 			    border: 5px solid #f4f4f4;
 			    border-radius: 50%;
-			    box-sizing: initial;
+			    box-sizing: content-box;
 			    content: "";
 			    display: block;
 			    height: 100%;
@@ -289,20 +287,12 @@
 		left: -7px;
 		padding: 7px;
 		box-shadow: 0 0 0 3px #FFF;
-		-webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
-		-webkit-transform: scale(1);
-		-moz-transition: -moz-transform 0.2s, opacity 0.2s;
-		-moz-transform: scale(1);
-		-ms-transform: scale(1);
 		transition: transform 0.2s, opacity 0.2s;
 		transform: scale(1);
 		opacity: 0;
 	}
 	&:hover {
 		.icon-featured:after {
-			-webkit-transform: scale(.8);
-			-moz-transform: scale(.8);
-			-ms-transform: scale(.8);
 			transform: scale(.8);
 			opacity: 1;
 		}
@@ -315,20 +305,12 @@
 		left: -7px;
 		padding: 7px;
 		box-shadow: 0 0 0 3px #FFF;
-		-webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
-		-webkit-transform: scale(0.8);
-		-moz-transition: -moz-transform 0.2s, opacity 0.2s;
-		-moz-transform: scale(0.8);
-		-ms-transform: scale(0.8);
 		transition: transform 0.2s, opacity 0.2s;
 		transform: scale(0.8);
 		opacity: 0;
 	}
 	&:hover {
 		.icon-featured:after {
-			-webkit-transform: scale(0.95);
-			-moz-transform: scale(0.95);
-			-ms-transform: scale(0.95);
 			transform: scale(0.95);
 			opacity: 1;
 		}
@@ -340,11 +322,6 @@
 		top: 0;
 		left: 0;
 		box-shadow: 0 0 0 10px #FFF;
-		-webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
-		-webkit-transform: scale(0.9);
-		-moz-transition: -moz-transform 0.2s, opacity 0.2s;
-		-moz-transform: scale(0.9);
-		-ms-transform: scale(0.9);
 		transition: transform 0.2s, opacity 0.2s;
 		transform: scale(0.9);
 		opacity: 0;
@@ -353,9 +330,6 @@
 		.icon-featured {
 			color: #FFF !important;
 			&:after {
-				-webkit-transform: scale(1);
-				-moz-transform: scale(1);
-				-ms-transform: scale(1);
 				transform: scale(1);
 				opacity: 0.8;
 			}
@@ -365,19 +339,11 @@
 
 .featured-box-effect-4 {
 	.icon-featured {
-		-webkit-transition: -webkit-transform 0.2s, transform 0.2s;
-		-moz-transition: -moz-transform 0.2s, transform 0.2s;
 		transition: transform 0.2s, transform 0.2s;
-		-webkit-transform: scale(1);
-		-moz-transform: scale(1);
-		-ms-transform: scale(1);
 		transform: scale(1);
 	}
 	&:hover {
 		.icon-featured {
-			-webkit-transform: scale(1.15);
-			-moz-transform: scale(1.15);
-			-ms-transform: scale(1.15);
 			transform: scale(1.15);
 		}
 	}
@@ -386,43 +352,15 @@
 .featured-box-effect-5 {
 	.icon-featured {
 		overflow: hidden;
-		-webkit-transition: all 0.3s;
-		-moz-transition: all 0.3s;
 		transition: all 0.3s;
 	}
 	&:hover {
 		.icon-featured {
-			-webkit-animation: toRightFromLeft 0.3s forwards;
-			-moz-animation: toRightFromLeft 0.3s forwards;
 			animation: toRightFromLeft 0.3s forwards;
 		}
 	}
 }
 
-@-webkit-keyframes toRightFromLeft {
-	49% {
-		-webkit-transform: translate(100%);
-	}
-	50% {
-		opacity: 0;
-		-webkit-transform: translate(-100%);
-	}
-	51% {
-		opacity: 1;
-	}
-}
-@-moz-keyframes toRightFromLeft {
-	49% {
-		-moz-transform: translate(100%);
-	}
-	50% {
-		opacity: 0;
-		-moz-transform: translate(-100%);
-	}
-	51% {
-		opacity: 1;
-	}
-}
 @keyframes toRightFromLeft {
 	49% {
 		transform: translate(100%);
@@ -438,16 +376,11 @@
 
 .featured-box-effect-6 {
 	.icon-featured:after {
-		-webkit-transition: all 0.2s, -webkit-transform 0.2s;
-		-moz-transition: all 0.2s, -moz-transform 0.2s;
 		transition: all 0.2s, transform 0.2s;
 	}
 	&:hover {
 		.box-content {
 			.icon-featured:after {
-				-webkit-transform: scale(1.1);
-				-moz-transform: scale(1.1);
-				-ms-transform: scale(1.1);
 				transform: scale(1.1);
 			}
 		}
@@ -458,12 +391,7 @@
 	.icon-featured:after {
 		opacity: 0;
 		box-shadow: 3px 3px #d5d5d5;
-		-webkit-transform: rotate(-90deg);
-		-moz-transform: rotate(-90deg);
-		-ms-transform: rotate(-90deg);
 		transform: rotate(-90deg);
-		-webkit-transition: opacity 0.2s, -webkit-transform 0.2s;
-		-moz-transition: opacity 0.2s, -moz-transform 0.2s;
 		transition: opacity 0.2s, transform 0.2s;
 		left: 0;
 		top: -1px;
@@ -471,27 +399,16 @@
 	&:hover {
 		.icon-featured:after {
 			opacity: 1;
-			-webkit-transform: rotate(0deg);
-			-moz-transform: rotate(0deg);
-			-ms-transform: rotate(0deg);
 			transform: rotate(0deg);
 		}
 	}
 	.icon-featured:before {
-		-webkit-transform: scale(0.8);
-		-moz-transform: scale(0.8);
-		-ms-transform: scale(0.8);
 		transform: scale(0.8);
 		opacity: 0.7;
-		-webkit-transition: -webkit-transform 0.2s, opacity 0.2s;
-		-moz-transition: -moz-transform 0.2s, opacity 0.2s;
 		transition: transform 0.2s, opacity 0.2s;
 	}
 	&:hover {
 		.icon-featured:before {
-			-webkit-transform: scale(1);
-			-moz-transform: scale(1);
-			-ms-transform: scale(1);
 			transform: scale(1);
 			opacity: 1;
 		}
@@ -500,23 +417,31 @@
 
 /* Feature Box */
 .feature-box {
-	clear: both;
+	display: flex;
 	.feature-box-icon {
-		background: #CCC;
-		border-radius: 35px;
-		color: #FFF;
-		display: inline-block;
-		float: $left;
-		height: 35px;
-		line-height: 35px;
-		margin-#{$right}: 10px;
-		position: relative;
-		text-align: center;
-		top: 5px;
-		width: 35px;
+	    display: inline-flex;
+	    align-items: center;
+	    justify-content: center;
+	    background: #CCC;
+	    border-radius: 100%;
+	    color: #FFF;
+	    font-size: 1rem;
+	    position: relative;
+	    top: 7px;
+	    text-align: center;
+	    padding: 0.8em;
+	    height: 1px;
+	    min-width: 2.7em;
+	    min-height: 2.7em;
 	}
 	.feature-box-info {
-		padding-#{$left}: 50px;
+		flex: 1 1 100%;
+		padding-#{$left}: 15px;
+	}
+	&.align-items-center {
+		.feature-box-icon {
+			top: 0;
+		}
 	}
 }
 
@@ -528,15 +453,15 @@
 		}
 		.feature-box-icon {
 			background: transparent;
-			width: 50px;
-			height: 50px;
-			i.fa,
-			i.icons {
-				font-size: 28px;
+			top: -3px;
+			.fa, .fas, .far, .fal, .fab, .icons {
+				font-size: 1.7em;
 			}
 		}
-		.feature-box-info {
-			padding-#{$left}: 60px;
+		&.align-items-center {
+			.feature-box-icon {
+				top: 0;
+			}
 		}
 	}
 }
@@ -551,8 +476,7 @@
 			border: 1px solid #CCC;
 			background: transparent;
 			line-height: 32px;
-			i.fa,
-			i.icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: #CCC;
 			}
 		}
@@ -562,18 +486,19 @@
 /* Style 4 */
 .feature-box {
 	&.feature-box-style-4 {
+		flex-wrap: wrap;
 		h4 {
 			color: $color-dark;
 		}
 		.feature-box-icon {
+	        flex-basis: 100%;
+			justify-content: flex-start;
 			background: transparent;
-			padding-bottom: 10px;
-			height: auto;
-			width: auto;
-			float: none;
-			i.fa,
-			i.icons {
-				font-size: 38px;
+		    padding: 0 0 1.2rem 0;
+			.fa, .fas, .far, .fal, .fab, .icons {
+				font-size: 2.35em;
+				width: auto;
+				height: auto;
 			}
 		}
 		.feature-box-info {
@@ -591,15 +516,17 @@
 		}
 		.feature-box-icon {
 			background: transparent;
-			width: 74px;
-			height: 74px;
-			i.fa,
-			i.icons {
-				font-size: 44px;
+			top: 0;
+		    padding: 1em 1.4em;
+		    min-width: 5em;
+			.fa, .fas, .far, .fal, .fab, .icons {
+				font-size: 2.75em;
 			}
 		}
-		.feature-box-info {
-			padding-#{$left}: 84px;
+		&.align-items-center {
+			.feature-box-icon {
+				top: 0;
+			}
 		}
 	}
 }
@@ -617,7 +544,7 @@
 			&:after {
 				border: 3px solid #f4f4f4;
 				border-radius: 50%;
-				box-sizing: initial;
+				box-sizing: content-box;
 				content: "";
 				display: block;
 				height: 100%;
@@ -627,10 +554,27 @@
 				top: -4px;
 				width: 100%;
 			}
-			i.fa,
-			i.icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: #a9a9a9;
 			}
+		}
+	}
+}
+
+/* Reverse All Resolutions */
+.feature-box.reverse-allres {
+	text-align: $right;
+    flex-direction: row-reverse;
+	.feature-box-info {
+		padding-#{$right}: 15px;
+		padding-#{$left}: 0;
+	}
+	&.feature-box-style-4 {
+		.feature-box-icon {
+			justify-content: flex-end;
+		}
+		.feature-box-info {
+			padding-#{$right}: 0;
 		}
 	}
 }
@@ -639,28 +583,17 @@
 @media (min-width: 992px) {
 	.feature-box.reverse {
 		text-align: $right;
+	    flex-direction: row-reverse;
 		.feature-box-info {
-			padding-#{$right}: 50px;
+			padding-#{$right}: 15px;
 			padding-#{$left}: 0;
 		}
-		.feature-box-icon {
-			float: $right;
-			margin-#{$right}: 0;
-			margin-#{$left}: 10px;
-		}
-		&.feature-box-style-2 {
-			.feature-box-info {
-				padding-#{$right}: 60px;
-			}
-		}
 		&.feature-box-style-4 {
+			.feature-box-icon {
+				justify-content: flex-end;
+			}
 			.feature-box-info {
 				padding-#{$right}: 0;
-			}
-		}
-		&.feature-box-style-5 {
-			.feature-box-info {
-				padding-#{$right}: 84px;
 			}
 		}
 	}
@@ -668,26 +601,38 @@
 
 /* Full Width */
 .featured-boxes-full {
-	width: 100%;
-	> [class*="col-"] {
-		padding: 0;
-	}
 	.featured-box-full {
 		text-align: center;
 		padding: 55px;
-		.fa, .icons, h1, h2, h3, h4, h5, h6, p, a {
+		.fa, .fas, .far, .fal, .fab, .icons, h1, h2, h3, h4, h5, h6, p, a {
 			color: #FFF;
 			padding: 0;
 			margin: 0;
 		}
-		.icons, .fa {
-			font-size: 55px;
+		.icons, .fa, .fas, .far, .fal, .fab {
+			font-size: 3.9em;
 			margin-bottom: 15px;
 			text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
 		}
 		p {
 			padding-top: 12px;
 			opacity: 0.8;
+		}
+	}
+}
+
+/*
+* IE
+*/
+html.ie {
+	.feature-box {
+		.feature-box-icon {
+			img {
+				min-width: 100%;
+			}
+		}
+		.feature-box-info {
+			flex: 0 1 100%;
 		}
 	}
 }

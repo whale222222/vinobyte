@@ -5,13 +5,13 @@
 	width: auto;
 	li {
 		display: inline-block;
-		margin: side-values(-1px 1px 5px 0);
+		margin: side-values(-1px 1px 0 0);
 		padding: 0;
 		border-radius: 100%;
 		overflow: visible;
 		box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.3);
 		a {
-			@include transition (all 0.2s ease);
+			transition: all 0.2s ease;
 			background: #FFF;
 			border-radius: 100%;
 			display: block;
@@ -95,6 +95,16 @@
 			&.social-icons-reddit {
 				a {
 					background: #ff4107;
+				}
+			}
+		}
+	}
+	&.social-icons-dark {
+		li {
+			a {
+				background: #181818;
+				i {
+					color: #FFF;
 				}
 			}
 		}

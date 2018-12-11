@@ -3,15 +3,16 @@
 // =============================================================================
 $font-primary: "Open Sans", Arial, sans-serif;
 $font-secondary: "Shadows Into Light", cursive;
-$body-font-size: 14px;
-$root-font-size: 14px;
-$body-line-height: 22px;
+$body-font-size: 14;
+$root-font-size: 10;
+$body-line-height: 22;
 
 // weights
 $font-weight-light: 300;
 $font-weight-normal: 400;
 $font-weight-semibold: 600;
 $font-weight-bold: 700;
+$font-weight-extra-bold: 900;
 
 // spacement
 $spacement-increment: 5px;
@@ -58,16 +59,16 @@ $color-tertiary-inverse: #FFF;
 $color-quaternary: $color-dark-4;
 $color-quaternary-inverse: #FFF;
 
-$color-success: #47a447;
+$color-success: #28a745;
 $color-success-inverse: #FFF;
 
-$color-warning: #ed9c28;
+$color-warning: #ffc107;
 $color-warning-inverse: #FFF;
 
-$color-danger: #d2322d;
+$color-danger: #dc3545;
 $color-danger-inverse: #FFF;
 
-$color-info: #5bc0de;
+$color-info: #17a2b8;
 $color-info-inverse: #FFF;
 
 // colors list
@@ -88,3 +89,26 @@ $dark-default-text: #808697;
 // SETTINGS
 // =============================================================================
 $border-radius: 5px;
+
+// =============================================================================
+// MEDIA QUERIES BREAKPOINTS
+// =============================================================================
+$screen-xs:                  576px !default;
+$screen-xs-min:              $screen-xs !default;
+$screen-phone:               $screen-xs-min !default;
+
+$screen-sm:                  768px !default;
+$screen-sm-min:              $screen-sm !default;
+$screen-tablet:              $screen-sm-min !default;
+
+$screen-md:                  992px !default;
+$screen-md-min:              $screen-md !default;
+$screen-desktop:             $screen-md-min !default;
+
+$screen-lg:                  1200px !default;
+$screen-lg-min:              $screen-lg !default;
+$screen-lg-desktop:          $screen-lg-min !default;
+
+$screen-xs-max:              ($screen-sm-min - 1) !default;
+$screen-sm-max:              ($screen-md-min - 1) !default;
+$screen-md-max:              ($screen-lg-min - 1) !default;

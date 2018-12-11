@@ -1,14 +1,19 @@
 html {
 	direction: $dir;
+	overflow-x: hidden;
+	box-shadow: none !important;
 }
 
 body {
 	background-color: $light-bg;
 	color: $color-font-default;
 	font-family: $font-primary;
-	font-size: $body-font-size;
-	line-height: $body-line-height;
+	font-size: $body-font-size + 0px;
+	line-height: $body-line-height + 0px;
 	margin: 0;
+	@include if-rtl() {
+		text-align: right;
+	}
 
 	a {
 		outline: none !important;
@@ -16,20 +21,20 @@ body {
 
 }
 
+.body {
+	background-color: $light-bg;
+}
+
+html.safari .body {
+	overflow-x: hidden;
+}
+
 li {
 	line-height: 24px;
 }
 
-/* Body */
-@media (max-width: 991px) {
-	body > .body {
-		overflow-x: hidden;
-		overflow-y: auto;
-	}
-}
-
 /* Responsive */
-@media (max-width: 479px) {
+@media (max-width: 575px) {
 
 	body {
 		font-size: 13px;

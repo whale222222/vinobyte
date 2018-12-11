@@ -51,7 +51,6 @@
 	}
 
 	form {
-		filter: alpha(opacity = 85);
 		opacity: 0.85;
 		label.error {
 			line-height: 16px;
@@ -76,7 +75,7 @@
 			content: "";
 			display: block;
 			height: 0;
-			#{$left}: -10px;
+			#{$right}: 100%;
 			position: absolute;
 			top: 0;
 			width: 7px;
@@ -91,10 +90,6 @@
 	.newsletter form {
 		width: 100%;
 		max-width: 262px;
-		input.form-control {
-			height: 34px;
-			padding: 6px 12px;
-		}
 	}
 
 	.alert a {
@@ -105,7 +100,7 @@
 	}
 
 	.twitter {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			clear: both;
 			font-size: 1.5em;
 			position: relative;
@@ -134,10 +129,8 @@
 		display: block;
 		font-size: 0.9em;
 		margin: -15px 0 5px;
-		filter: alpha(opacity = 55);
 		opacity: 0.55;
 		&:hover {
-			filter: alpha(opacity = 100);
 			opacity: 1;
 		}
 	}
@@ -167,7 +160,7 @@
 
 	.logo {
 		display: block;
-		&.mb-xl {
+		&.mb-5 {
 			margin-bottom: 12px;
 		}
 	}
@@ -280,7 +273,7 @@
 		.twitter-account {
 			color: #777;
 		}
-		ul.nav-pills > li.active > a {
+		ul.nav-pills > li > a.active {
 			color: #FFF;
 		}
 	}
@@ -303,6 +296,15 @@
 		.footer-copyright nav ul li {
 			border-#{$left}-color: #FFF;
 		}
+	}
+
+	// Footer Reveal
+	&.footer-reveal {
+		position: fixed;
+	    bottom: 0;
+	    left: 0;
+	    width: 100%;
+	    z-index: -10;
 	}
 }
 

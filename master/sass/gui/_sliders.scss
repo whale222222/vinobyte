@@ -8,6 +8,11 @@
 	.tparrows {
 		border-radius: 6px;
 	}
+	.slider-single-slide {
+		.tparrows {
+			display: none;
+		}
+	}
 	.top-label {
 		color: #FFF;
 		font-size: 24px;
@@ -40,11 +45,11 @@
 		font-family: $font-secondary;
 		text-transform: uppercase;
 	}
-	.btn-slider-action {
+	.btn.btn-lg.btn-slider-action {
 		font-size: 22px;
 		font-weight: 600;
 		line-height: 20px;
-		padding: 20px 25px;
+		padding: 1.2rem 1.8rem;
 	}
 	.top-label-dark, .main-label-dark, .bottom-label-dark {
 		color: #333;
@@ -55,8 +60,16 @@
 			color: #333;
 		}
 	}
+	.tp-caption-overlay {
+		background: #000;
+		padding: 10px;
+	}
+	.tp-caption-overlay-opacity {
+		background: rgba(0,0,0,0.4);
+		padding: 10px;
+	}
 	.tp-opacity-overlay {
-		background: rgba(0,0,0,0.85);
+		background: rgba(0,0,0,0.75);
 	}
 	&.transparent {
 		background-color: transparent;
@@ -64,7 +77,6 @@
 	&.light {
 		background-color: #EAEAEA;
 		.tp-bannershadow {
-			filter: alpha(opacity = 5);
 			opacity: 0.05;
 			top: 0;
 			bottom: auto;
@@ -79,6 +91,71 @@
 				color: #333;
 			}
 		}
+	}
+}
+
+/* Arrows */
+.tparrows {
+	&.tparrows-carousel {
+		display: inline-block;
+		position: absolute;
+		width: 30px;
+		height: auto;
+		padding: 20px 0;
+
+		&.tp-leftarrow {
+			#{$right}: auto !important;
+			#{$left}: -30px !important;
+			border-radius: corner-values(0 4px 4px 0);
+			&:before {
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				content: "\f053";
+				@include if-rtl {
+					content: "\f054";
+				}
+				position: relative;
+				#{$left}: -1px;
+				top: 1px;
+			}
+		}
+		&.tp-rightarrow {
+			#{$right}: -60px !important;
+			#{$left}: auto !important;
+			border-radius: corner-values(4px 0 0 4px);
+			&:before {
+				font-family: 'Font Awesome 5 Free';
+				font-weight: 900;
+				content: "\f054";
+				@include if-rtl {
+					content: "\f053";
+				}
+				position: relative;
+				#{$left}: 2px;
+				top: 1px;
+			}
+		}
+	}
+}
+
+/* Slider IE Fix */
+html.ie .forcefullwidth_wrapper_tp_banner {
+	overflow: hidden;
+}
+
+/* Embed Border */
+.rev_slider embed,
+.rev_slider iframe,
+.rev_slider object,
+.rev_slider video {
+	border: 0 !important;
+}
+
+/* Defaults */
+.hesperiden-custom {
+	padding: 10px 0 !important;
+	.tp-tab {
+		border: 0 !important;
 	}
 }
 
@@ -121,22 +198,30 @@
 
 }
 
+/* Boxed */
+html.boxed {
+	.slider-container {
+		width: 100% !important;
+		left: auto !important;
+	}
+}
+
 /* Home Slider - Nivo Slider */
 .nivo-slider {
 	position: relative;
 	.theme-default {
 		.nivoSlider {
-			border-radius: 10px 10px 0px 0px;
+			border-radius: 10px 10px 0 0;
 			box-shadow: none;
 			margin-top: 10px;
 			img {
-				border-radius: corner-values(10px 10px 0px 0px);
+				border-radius: corner-values(10px 10px 0 0);
 			}
 		}
 		.nivo-controlNav {
 			margin-top: -72px;
 			position: absolute;
-			z-index: 100;
+			z-index: 99;
 			#{$right}: 5px;
 			bottom: -17px;
 		}

@@ -1,7 +1,7 @@
 /*
 Plugin Name: 	BrowserSelector
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 */
 
 (function($) {
@@ -63,227 +63,6 @@ Version: 		4.2.0
 	$.browserSelector();
 
 })(jQuery);
-
-/*
-Plugin Name: 	waitForImages
-Written by: 	https://github.com/alexanderdickson/waitForImages
-*/
-
-/*! waitForImages jQuery Plugin - v2.0.2 - 2015-05-05
-* https://github.com/alexanderdickson/waitForImages
-* Copyright (c) 2015 Alex Dickson; Licensed MIT */
-;(function (factory) {
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof exports === 'object') {
-        // CommonJS / nodejs module
-        module.exports = factory(require('jquery'));
-    } else {
-        // Browser globals
-        factory(jQuery);
-    }
-}(function ($) {
-    // Namespace all events.
-    var eventNamespace = 'waitForImages';
-
-    // CSS properties which contain references to images.
-    $.waitForImages = {
-        hasImageProperties: [
-            'backgroundImage',
-            'listStyleImage',
-            'borderImage',
-            'borderCornerImage',
-            'cursor'
-        ],
-        hasImageAttributes: ['srcset']
-    };
-
-    // Custom selector to find `img` elements that have a valid `src`
-    // attribute and have not already loaded.
-    $.expr[':'].uncached = function (obj) {
-        // Ensure we are dealing with an `img` element with a valid
-        // `src` attribute.
-        if (!$(obj).is('img[src][src!=""]')) {
-            return false;
-        }
-
-        return !obj.complete;
-    };
-
-    $.fn.waitForImages = function () {
-
-        var allImgsLength = 0;
-        var allImgsLoaded = 0;
-        var deferred = $.Deferred();
-
-        var finishedCallback;
-        var eachCallback;
-        var waitForAll;
-
-        // Handle options object (if passed).
-        if ($.isPlainObject(arguments[0])) {
-
-            waitForAll = arguments[0].waitForAll;
-            eachCallback = arguments[0].each;
-            finishedCallback = arguments[0].finished;
-
-        } else {
-
-            // Handle if using deferred object and only one param was passed in.
-            if (arguments.length === 1 && $.type(arguments[0]) === 'boolean') {
-                waitForAll = arguments[0];
-            } else {
-                finishedCallback = arguments[0];
-                eachCallback = arguments[1];
-                waitForAll = arguments[2];
-            }
-
-        }
-
-        // Handle missing callbacks.
-        finishedCallback = finishedCallback || $.noop;
-        eachCallback = eachCallback || $.noop;
-
-        // Convert waitForAll to Boolean
-        waitForAll = !! waitForAll;
-
-        // Ensure callbacks are functions.
-        if (!$.isFunction(finishedCallback) || !$.isFunction(eachCallback)) {
-            throw new TypeError('An invalid callback was supplied.');
-        }
-
-        this.each(function () {
-            // Build a list of all imgs, dependent on what images will
-            // be considered.
-            var obj = $(this);
-            var allImgs = [];
-            // CSS properties which may contain an image.
-            var hasImgProperties = $.waitForImages.hasImageProperties || [];
-            // Element attributes which may contain an image.
-            var hasImageAttributes = $.waitForImages.hasImageAttributes || [];
-            // To match `url()` references.
-            // Spec: http://www.w3.org/TR/CSS2/syndata.html#value-def-uri
-            var matchUrl = /url\(\s*(['"]?)(.*?)\1\s*\)/g;
-
-            if (waitForAll) {
-
-                // Get all elements (including the original), as any one of
-                // them could have a background image.
-                obj.find('*').addBack().each(function () {
-                    var element = $(this);
-
-                    // If an `img` element, add it. But keep iterating in
-                    // case it has a background image too.
-                    if (element.is('img:uncached')) {
-                        allImgs.push({
-                            src: element.attr('src'),
-                            element: element[0]
-                        });
-                    }
-
-                    $.each(hasImgProperties, function (i, property) {
-                        var propertyValue = element.css(property);
-                        var match;
-
-                        // If it doesn't contain this property, skip.
-                        if (!propertyValue) {
-                            return true;
-                        }
-
-                        // Get all url() of this element.
-                        while (match = matchUrl.exec(propertyValue)) {
-                            allImgs.push({
-                                src: match[2],
-                                element: element[0]
-                            });
-                        }
-                    });
-
-                    $.each(hasImageAttributes, function (i, attribute) {
-                        var attributeValue = element.attr(attribute);
-                        var attributeValues;
-
-                        // If it doesn't contain this property, skip.
-                        if (!attributeValue) {
-                            return true;
-                        }
-
-                        // Check for multiple comma separated images
-                        attributeValues = attributeValue.split(',');
-
-                        $.each(attributeValues, function(i, value) {
-                            // Trim value and get string before first
-                            // whitespace (for use with srcset).
-                            value = $.trim(value).split(' ')[0];
-                            allImgs.push({
-                                src: value,
-                                element: element[0]
-                            });
-                        });
-                    });
-                });
-            } else {
-                // For images only, the task is simpler.
-                obj.find('img:uncached')
-                    .each(function () {
-                    allImgs.push({
-                        src: this.src,
-                        element: this
-                    });
-                });
-            }
-
-            allImgsLength = allImgs.length;
-            allImgsLoaded = 0;
-
-            // If no images found, don't bother.
-            if (allImgsLength === 0) {
-                finishedCallback.call(obj[0]);
-                deferred.resolveWith(obj[0]);
-            }
-
-            $.each(allImgs, function (i, img) {
-
-                var image = new Image();
-                var events =
-                  'load.' + eventNamespace + ' error.' + eventNamespace;
-
-                // Handle the image loading and error with the same callback.
-                $(image).one(events, function me (event) {
-                    // If an error occurred with loading the image, set the
-                    // third argument accordingly.
-                    var eachArguments = [
-                        allImgsLoaded,
-                        allImgsLength,
-                        event.type == 'load'
-                    ];
-                    allImgsLoaded++;
-
-                    eachCallback.apply(img.element, eachArguments);
-                    deferred.notifyWith(img.element, eachArguments);
-
-                    // Unbind the event listeners. I use this in addition to
-                    // `one` as one of those events won't be called (either
-                    // 'load' or 'error' will be called).
-                    $(this).off(events, me);
-
-                    if (allImgsLoaded == allImgsLength) {
-                        finishedCallback.call(obj[0]);
-                        deferred.resolveWith(obj[0]);
-                        return false;
-                    }
-
-                });
-
-                image.src = img.src;
-            });
-        });
-
-        return deferred.promise();
-
-    };
-}));
 
 /*
 Plugin Name: 	Count To
@@ -372,11 +151,100 @@ Written by: 	Matt Huggins - https://github.com/mhuggins/jquery-countTo
 }(jQuery));
 
 /*
+Plugin Name: 	Visible
+Written by: 	https://github.com/customd/jquery-visible/blob/master/jquery.visible.js
+Description: 	This is a jQuery plugin which allows us to quickly check if an element is within the browsers visual viewport.
+*/
+(function($){
+
+    /**
+     * Copyright 2012, Digital Fusion
+     * Licensed under the MIT license.
+     * http://teamdf.com/jquery-plugins/license/
+     *
+     * @author Sam Sehnert
+     * @desc A small plugin that checks whether elements are within
+     *       the user visible viewport of a web browser.
+     *       only accounts for vertical position, not horizontal.
+     */
+    var $w=$(window);
+    $.fn.visible = function(partial,hidden,direction,container){
+
+        if (this.length < 1)
+            return;
+	
+	// Set direction default to 'both'.
+	direction = direction || 'both';
+	    
+        var $t          = this.length > 1 ? this.eq(0) : this,
+						isContained = typeof container !== 'undefined' && container !== null,
+						$c				  = isContained ? $(container) : $w,
+						wPosition        = isContained ? $c.position() : 0,
+            t           = $t.get(0),
+            vpWidth     = $c.outerWidth(),
+            vpHeight    = $c.outerHeight(),
+            clientSize  = hidden === true ? t.offsetWidth * t.offsetHeight : true;
+
+        if (typeof t.getBoundingClientRect === 'function'){
+
+            // Use this native browser method, if available.
+            var rec = t.getBoundingClientRect(),
+                tViz = isContained ?
+												rec.top - wPosition.top >= 0 && rec.top < vpHeight + wPosition.top :
+												rec.top >= 0 && rec.top < vpHeight,
+                bViz = isContained ?
+												rec.bottom - wPosition.top > 0 && rec.bottom <= vpHeight + wPosition.top :
+												rec.bottom > 0 && rec.bottom <= vpHeight,
+                lViz = isContained ?
+												rec.left - wPosition.left >= 0 && rec.left < vpWidth + wPosition.left - 100 :
+												rec.left >= 0 && rec.left <  vpWidth - 100,
+                rViz = isContained ?
+												rec.right - wPosition.left > 0  && rec.right < vpWidth + wPosition.left - 100  :
+												rec.right > 0 && rec.right <= vpWidth - 100,
+                vVisible   = partial ? tViz || bViz : tViz && bViz,
+                hVisible   = partial ? lViz || rViz : lViz && rViz,
+		vVisible = (rec.top < 0 && rec.bottom > vpHeight) ? true : vVisible,
+                hVisible = (rec.left < 0 && rec.right > vpWidth) ? true : hVisible;
+
+            if(direction === 'both')
+                return clientSize && vVisible && hVisible;
+            else if(direction === 'vertical')
+                return clientSize && vVisible;
+            else if(direction === 'horizontal')
+                return clientSize && hVisible;
+        } else {
+
+            var viewTop 				= isContained ? 0 : wPosition,
+                viewBottom      = viewTop + vpHeight,
+                viewLeft        = $c.scrollLeft(),
+                viewRight       = viewLeft + vpWidth,
+                position          = $t.position(),
+                _top            = position.top,
+                _bottom         = _top + $t.height(),
+                _left           = position.left,
+                _right          = _left + $t.width(),
+                compareTop      = partial === true ? _bottom : _top,
+                compareBottom   = partial === true ? _top : _bottom,
+                compareLeft     = partial === true ? _right : _left,
+                compareRight    = partial === true ? _left : _right;
+
+            if(direction === 'both')
+                return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop)) && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+            else if(direction === 'vertical')
+                return !!clientSize && ((compareBottom <= viewBottom) && (compareTop >= viewTop));
+            else if(direction === 'horizontal')
+                return !!clientSize && ((compareRight <= viewRight) && (compareLeft >= viewLeft));
+        }
+    };
+
+})(jQuery);
+
+
+/*
 Plugin Name: 	afterResize.js
 Written by: 	https://github.com/mcshaman/afterResize.js
 Description: 	Simple jQuery plugin designed to emulate an 'after resize' event.
 */
-
 ( function( $ ) {
 	"use strict";
 	
@@ -480,7 +348,7 @@ Description: 	Simple jQuery plugin designed to emulate an 'after resize' event.
 /*
 Plugin Name: 	matchHeight
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 
 Based on:
 
@@ -490,339 +358,339 @@ Based on:
 */
 
 ;(function($) {
-    /*
-    *  internal
-    */
-
-    var _previousResizeWidth = -1,
-        _updateTimeout = -1;
-
-    /*
-    *  _rows
-    *  utility function returns array of jQuery selections representing each row
-    *  (as displayed after float wrapping applied by browser)
-    */
-
-    var _rows = function(elements) {
-        var tolerance = 1,
-            $elements = $(elements),
-            lastTop = null,
-            rows = [];
-
-        // group elements by their top position
-        $elements.each(function(){
-            var $that = $(this),
-                top = $that.offset().top - _parse($that.css('margin-top')),
-                lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
-
-            if (lastRow === null) {
-                // first item on the row, so just push it
-                rows.push($that);
-            } else {
-                // if the row top is the same, add to the row group
-                if (Math.floor(Math.abs(lastTop - top)) <= tolerance) {
-                    rows[rows.length - 1] = lastRow.add($that);
-                } else {
-                    // otherwise start a new row group
-                    rows.push($that);
-                }
-            }
-
-            // keep track of the last row top
-            lastTop = top;
-        });
-
-        return rows;
-    };
-
-    /*
-    *  _parse
-    *  value parse utility function
-    */
-
-    var _parse = function(value) {
-        // parse value and convert NaN to 0
-        return parseFloat(value) || 0;
-    };
-
-    /*
-    *  _parseOptions
-    *  handle plugin options
-    */
-
-    var _parseOptions = function(options) {
-        var opts = {
-            byRow: true,
-            remove: false,
-            property: 'height'
-        };
-
-        if (typeof options === 'object') {
-            return $.extend(opts, options);
-        }
-
-        if (typeof options === 'boolean') {
-            opts.byRow = options;
-        } else if (options === 'remove') {
-            opts.remove = true;
-        }
-
-        return opts;
-    };
-
-    /*
-    *  matchHeight
-    *  plugin definition
-    */
-
-    var matchHeight = $.fn.matchHeight = function(options) {
-        var opts = _parseOptions(options);
-
-        // handle remove
-        if (opts.remove) {
-            var that = this;
-
-            // remove fixed height from all selected elements
-            this.css(opts.property, '');
-
-            // remove selected elements from all groups
-            $.each(matchHeight._groups, function(key, group) {
-                group.elements = group.elements.not(that);
-            });
-
-            // TODO: cleanup empty groups
-
-            return this;
-        }
-
-        if (this.length <= 1)
-            return this;
-
-        // keep track of this group so we can re-apply later on load and resize events
-        matchHeight._groups.push({
-            elements: this,
-            options: opts
-        });
-
-        // match each element's height to the tallest element in the selection
-        matchHeight._apply(this, opts);
-
-        return this;
-    };
-
-    /*
-    *  plugin global options
-    */
-
-    matchHeight._groups = [];
-    matchHeight._throttle = 80;
-    matchHeight._maintainScroll = false;
-    matchHeight._beforeUpdate = null;
-    matchHeight._afterUpdate = null;
-
-    /*
-    *  matchHeight._apply
-    *  apply matchHeight to given elements
-    */
-
-    matchHeight._apply = function(elements, options) {
-        var opts = _parseOptions(options),
-            $elements = $(elements),
-            rows = [$elements];
-
-        // take note of scroll position
-        var scrollTop = $(window).scrollTop(),
-            htmlHeight = $('html').outerHeight(true);
-
-        // get hidden parents
-        var $hiddenParents = $elements.parents().filter(':hidden');
-
-        // cache the original inline style
-        $hiddenParents.each(function() {
-            var $that = $(this);
-            $that.data('style-cache', $that.attr('style'));
-        });
-
-        // temporarily must force hidden parents visible
-        $hiddenParents.css('display', 'block');
-
-        // get rows if using byRow, otherwise assume one row
-        if (opts.byRow) {
-
-            // must first force an arbitrary equal height so floating elements break evenly
-            $elements.each(function() {
-                var $that = $(this),
-                    display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
-
-                // cache the original inline style
-                $that.data('style-cache', $that.attr('style'));
-
-                $that.css({
-                    'display': display,
-                    'padding-top': '0',
-                    'padding-bottom': '0',
-                    'margin-top': '0',
-                    'margin-bottom': '0',
-                    'border-top-width': '0',
-                    'border-bottom-width': '0',
-                    'height': '100px'
-                });
-            });
-
-            // get the array of rows (based on element top position)
-            rows = _rows($elements);
-
-            // revert original inline styles
-            $elements.each(function() {
-                var $that = $(this);
-                $that.attr('style', $that.data('style-cache') || '');
-            });
-        }
-
-        $.each(rows, function(key, row) {
-            var $row = $(row),
-                maxHeight = 0;
-
-            // skip apply to rows with only one item
-            if (opts.byRow && $row.length <= 1) {
-                $row.css(opts.property, '');
-                return;
-            }
-
-            // iterate the row and find the max height
-            $row.each(function(){
-                var $that = $(this),
-                    display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
-
-                // ensure we get the correct actual height (and not a previously set height value)
-                var css = { 'display': display };
-                css[opts.property] = '';
-                $that.css(css);
-
-                // find the max height (including padding, but not margin)
-                if ($that.outerHeight(false) > maxHeight)
-                    maxHeight = $that.outerHeight(false);
-
-                // revert display block
-                $that.css('display', '');
-            });
-
-            // iterate the row and apply the height to all elements
-            $row.each(function(){
-                var $that = $(this),
-                    verticalPadding = 0;
-
-                // handle padding and border correctly (required when not using border-box)
-                if ($that.css('box-sizing') !== 'border-box') {
-                    verticalPadding += _parse($that.css('border-top-width')) + _parse($that.css('border-bottom-width'));
-                    verticalPadding += _parse($that.css('padding-top')) + _parse($that.css('padding-bottom'));
-                }
-
-                // set the height (accounting for padding and border)
-                $that.css(opts.property, maxHeight - verticalPadding);
-            });
-        });
-
-        // revert hidden parents
-        $hiddenParents.each(function() {
-            var $that = $(this);
-            $that.attr('style', $that.data('style-cache') || null);
-        });
-
-        // restore scroll position if enabled
-        if (matchHeight._maintainScroll)
-            $(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
-
-        return this;
-    };
-
-    /*
-    *  matchHeight._applyDataApi
-    *  applies matchHeight to all elements with a data-match-height attribute
-    */
-
-    matchHeight._applyDataApi = function() {
-        var groups = {};
-
-        // generate groups by their groupId set by elements using data-match-height
-        $('[data-match-height], [data-mh]').each(function() {
-            var $this = $(this),
-                groupId = $this.attr('data-match-height') || $this.attr('data-mh');
-            if (groupId in groups) {
-                groups[groupId] = groups[groupId].add($this);
-            } else {
-                groups[groupId] = $this;
-            }
-        });
-
-        // apply matchHeight to each group
-        $.each(groups, function() {
-            this.matchHeight(true);
-        });
-    };
-
-    /*
-    *  matchHeight._update
-    *  updates matchHeight on all current groups with their correct options
-    */
-
-    var _update = function(event) {
-        if (matchHeight._beforeUpdate)
-            matchHeight._beforeUpdate(event, matchHeight._groups);
-
-        $.each(matchHeight._groups, function() {
-            matchHeight._apply(this.elements, this.options);
-        });
-
-        if (matchHeight._afterUpdate)
-            matchHeight._afterUpdate(event, matchHeight._groups);
-    };
-
-    matchHeight._update = function(throttle, event) {
-        // prevent update if fired from a resize event
-        // where the viewport width hasn't actually changed
-        // fixes an event looping bug in IE8
-        if (event && event.type === 'resize') {
-            var windowWidth = $(window).width();
-            if (windowWidth === _previousResizeWidth)
-                return;
-            _previousResizeWidth = windowWidth;
-        }
-
-        // throttle updates
-        if (!throttle) {
-            _update(event);
-        } else if (_updateTimeout === -1) {
-            _updateTimeout = setTimeout(function() {
-                _update(event);
-                _updateTimeout = -1;
-            }, matchHeight._throttle);
-        }
-    };
-
-    /*
-    *  bind events
-    */
-
-    // apply on DOM ready event
-    $(matchHeight._applyDataApi);
-
-    // update heights on load and resize events
-    $(window).bind('load', function(event) {
-        matchHeight._update(false, event);
-    });
-
-    // throttled update heights on resize events
-    $(window).bind('resize orientationchange', function(event) {
-        matchHeight._update(true, event);
-    });
+	/*
+	*  internal
+	*/
+
+	var _previousResizeWidth = -1,
+		_updateTimeout = -1;
+
+	/*
+	*  _rows
+	*  utility function returns array of jQuery selections representing each row
+	*  (as displayed after float wrapping applied by browser)
+	*/
+
+	var _rows = function(elements) {
+		var tolerance = 1,
+			$elements = $(elements),
+			lastTop = null,
+			rows = [];
+
+		// group elements by their top position
+		$elements.each(function(){
+			var $that = $(this),
+				top = $that.offset().top - _parse($that.css('margin-top')),
+				lastRow = rows.length > 0 ? rows[rows.length - 1] : null;
+
+			if (lastRow === null) {
+				// first item on the row, so just push it
+				rows.push($that);
+			} else {
+				// if the row top is the same, add to the row group
+				if (Math.floor(Math.abs(lastTop - top)) <= tolerance) {
+					rows[rows.length - 1] = lastRow.add($that);
+				} else {
+					// otherwise start a new row group
+					rows.push($that);
+				}
+			}
+
+			// keep track of the last row top
+			lastTop = top;
+		});
+
+		return rows;
+	};
+
+	/*
+	*  _parse
+	*  value parse utility function
+	*/
+
+	var _parse = function(value) {
+		// parse value and convert NaN to 0
+		return parseFloat(value) || 0;
+	};
+
+	/*
+	*  _parseOptions
+	*  handle plugin options
+	*/
+
+	var _parseOptions = function(options) {
+		var opts = {
+			byRow: true,
+			remove: false,
+			property: 'height'
+		};
+
+		if (typeof options === 'object') {
+			return $.extend(opts, options);
+		}
+
+		if (typeof options === 'boolean') {
+			opts.byRow = options;
+		} else if (options === 'remove') {
+			opts.remove = true;
+		}
+
+		return opts;
+	};
+
+	/*
+	*  matchHeight
+	*  plugin definition
+	*/
+
+	var matchHeight = $.fn.matchHeight = function(options) {
+		var opts = _parseOptions(options);
+
+		// handle remove
+		if (opts.remove) {
+			var that = this;
+
+			// remove fixed height from all selected elements
+			this.css(opts.property, '');
+
+			// remove selected elements from all groups
+			$.each(matchHeight._groups, function(key, group) {
+				group.elements = group.elements.not(that);
+			});
+
+			// TODO: cleanup empty groups
+
+			return this;
+		}
+
+		if (this.length <= 1)
+			return this;
+
+		// keep track of this group so we can re-apply later on load and resize events
+		matchHeight._groups.push({
+			elements: this,
+			options: opts
+		});
+
+		// match each element's height to the tallest element in the selection
+		matchHeight._apply(this, opts);
+
+		return this;
+	};
+
+	/*
+	*  plugin global options
+	*/
+
+	matchHeight._groups = [];
+	matchHeight._throttle = 80;
+	matchHeight._maintainScroll = false;
+	matchHeight._beforeUpdate = null;
+	matchHeight._afterUpdate = null;
+
+	/*
+	*  matchHeight._apply
+	*  apply matchHeight to given elements
+	*/
+
+	matchHeight._apply = function(elements, options) {
+		var opts = _parseOptions(options),
+			$elements = $(elements),
+			rows = [$elements];
+
+		// take note of scroll position
+		var scrollTop = $(window).scrollTop(),
+			htmlHeight = $('html').outerHeight(true);
+
+		// get hidden parents
+		var $hiddenParents = $elements.parents().filter(':hidden');
+
+		// cache the original inline style
+		$hiddenParents.each(function() {
+			var $that = $(this);
+			$that.data('style-cache', $that.attr('style'));
+		});
+
+		// temporarily must force hidden parents visible
+		$hiddenParents.css('display', 'block');
+
+		// get rows if using byRow, otherwise assume one row
+		if (opts.byRow) {
+
+			// must first force an arbitrary equal height so floating elements break evenly
+			$elements.each(function() {
+				var $that = $(this),
+					display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
+
+				// cache the original inline style
+				$that.data('style-cache', $that.attr('style'));
+
+				$that.css({
+					'display': display,
+					'padding-top': '0',
+					'padding-bottom': '0',
+					'margin-top': '0',
+					'margin-bottom': '0',
+					'border-top-width': '0',
+					'border-bottom-width': '0',
+					'height': '100px'
+				});
+			});
+
+			// get the array of rows (based on element top position)
+			rows = _rows($elements);
+
+			// revert original inline styles
+			$elements.each(function() {
+				var $that = $(this);
+				$that.attr('style', $that.data('style-cache') || '');
+			});
+		}
+
+		$.each(rows, function(key, row) {
+			var $row = $(row),
+				maxHeight = 0;
+
+			// skip apply to rows with only one item
+			if (opts.byRow && $row.length <= 1) {
+				$row.css(opts.property, '');
+				return;
+			}
+
+			// iterate the row and find the max height
+			$row.each(function(){
+				var $that = $(this),
+					display = $that.css('display') === 'inline-block' ? 'inline-block' : 'block';
+
+				// ensure we get the correct actual height (and not a previously set height value)
+				var css = { 'display': display };
+				css[opts.property] = '';
+				$that.css(css);
+
+				// find the max height (including padding, but not margin)
+				if ($that.outerHeight(false) > maxHeight)
+					maxHeight = $that.outerHeight(false);
+
+				// revert display block
+				$that.css('display', '');
+			});
+
+			// iterate the row and apply the height to all elements
+			$row.each(function(){
+				var $that = $(this),
+					verticalPadding = 0;
+
+				// handle padding and border correctly (required when not using border-box)
+				if ($that.css('box-sizing') !== 'border-box') {
+					verticalPadding += _parse($that.css('border-top-width')) + _parse($that.css('border-bottom-width'));
+					verticalPadding += _parse($that.css('padding-top')) + _parse($that.css('padding-bottom'));
+				}
+
+				// set the height (accounting for padding and border)
+				$that.css(opts.property, maxHeight - verticalPadding);
+			});
+		});
+
+		// revert hidden parents
+		$hiddenParents.each(function() {
+			var $that = $(this);
+			$that.attr('style', $that.data('style-cache') || null);
+		});
+
+		// restore scroll position if enabled
+		if (matchHeight._maintainScroll)
+			$(window).scrollTop((scrollTop / htmlHeight) * $('html').outerHeight(true));
+
+		return this;
+	};
+
+	/*
+	*  matchHeight._applyDataApi
+	*  applies matchHeight to all elements with a data-match-height attribute
+	*/
+
+	matchHeight._applyDataApi = function() {
+		var groups = {};
+
+		// generate groups by their groupId set by elements using data-match-height
+		$('[data-match-height], [data-mh]').each(function() {
+			var $this = $(this),
+				groupId = $this.attr('data-match-height') || $this.attr('data-mh');
+			if (groupId in groups) {
+				groups[groupId] = groups[groupId].add($this);
+			} else {
+				groups[groupId] = $this;
+			}
+		});
+
+		// apply matchHeight to each group
+		$.each(groups, function() {
+			this.matchHeight(true);
+		});
+	};
+
+	/*
+	*  matchHeight._update
+	*  updates matchHeight on all current groups with their correct options
+	*/
+
+	var _update = function(event) {
+		if (matchHeight._beforeUpdate)
+			matchHeight._beforeUpdate(event, matchHeight._groups);
+
+		$.each(matchHeight._groups, function() {
+			matchHeight._apply(this.elements, this.options);
+		});
+
+		if (matchHeight._afterUpdate)
+			matchHeight._afterUpdate(event, matchHeight._groups);
+	};
+
+	matchHeight._update = function(throttle, event) {
+		// prevent update if fired from a resize event
+		// where the viewport width hasn't actually changed
+		// fixes an event looping bug in IE8
+		if (event && event.type === 'resize') {
+			var windowWidth = $(window).width();
+			if (windowWidth === _previousResizeWidth)
+				return;
+			_previousResizeWidth = windowWidth;
+		}
+
+		// throttle updates
+		if (!throttle) {
+			_update(event);
+		} else if (_updateTimeout === -1) {
+			_updateTimeout = setTimeout(function() {
+				_update(event);
+				_updateTimeout = -1;
+			}, matchHeight._throttle);
+		}
+	};
+
+	/*
+	*  bind events
+	*/
+
+	// apply on DOM ready event
+	$(matchHeight._applyDataApi);
+
+	// update heights on load and resize events
+	$(window).bind('load', function(event) {
+		matchHeight._update(false, event);
+	});
+
+	// throttled update heights on resize events
+	$(window).bind('resize orientationchange', function(event) {
+		matchHeight._update(true, event);
+	});
 
 })(jQuery);
 
 /*
 Plugin Name: 	jQuery.pin
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 
 Based on:
 
@@ -831,700 +699,570 @@ Based on:
 
 */
 (function ($) {
-    "use strict";
-    $.fn.pin = function (options) {
-        var scrollY = 0, elements = [], disabled = false, $window = $(window);
+	"use strict";
+	$.fn.pin = function (options) {
+		var scrollY = 0, elements = [], disabled = false, $window = $(window);
 
-        options = options || {};
+		options = options || {};
 
-        var recalculateLimits = function () {
-            for (var i=0, len=elements.length; i<len; i++) {
-                var $this = elements[i];
+		var recalculateLimits = function () {
+			for (var i=0, len=elements.length; i<len; i++) {
+				var $this = elements[i];
 
-                if (options.minWidth && $window.width() <= options.minWidth) {
-                    if ($this.parent().is(".pin-wrapper")) { $this.unwrap(); }
-                    $this.css({width: "", left: "", top: "", position: ""});
-                    if (options.activeClass) { $this.removeClass(options.activeClass); }
-                    disabled = true;
-                    continue;
-                } else {
-                    disabled = false;
-                }
+				if (options.minWidth && $window.width() <= options.minWidth) {
+					if ($this.parent().is(".pin-wrapper")) { $this.unwrap(); }
+					$this.css({width: "", left: "", top: "", position: ""});
+					if (options.activeClass) { $this.removeClass(options.activeClass); }
+					disabled = true;
+					continue;
+				} else {
+					disabled = false;
+				}
 
-                var $container = options.containerSelector ? $this.closest(options.containerSelector) : $(document.body);
-                var offset = $this.offset();
-                var containerOffset = $container.offset();
-                var parentOffset = $this.parent().offset();
+				var $container = options.containerSelector ? $this.closest(options.containerSelector) : $(document.body);
+				var offset = $this.offset();
+				var containerOffset = $container.offset();
+				var parentOffset = $this.parent().offset();
 
-                if (!$this.parent().is(".pin-wrapper")) {
-                    $this.wrap("<div class='pin-wrapper'>");
-                }
+				if (!$this.parent().is(".pin-wrapper")) {
+					$this.wrap("<div class='pin-wrapper'>");
+				}
 
-                var pad = $.extend({
-                  top: 0,
-                  bottom: 0
-                }, options.padding || {});
+				var pad = $.extend({
+				  top: 0,
+				  bottom: 0
+				}, options.padding || {});
 
-                $this.data("pin", {
-                    pad: pad,
-                    from: (options.containerSelector ? containerOffset.top : offset.top) - pad.top,
-                    to: containerOffset.top + $container.height() - $this.outerHeight() - pad.bottom,
-                    end: containerOffset.top + $container.height(),
-                    parentTop: parentOffset.top
-                });
+				$this.data("pin", {
+					pad: pad,
+					from: (options.containerSelector ? containerOffset.top : offset.top) - pad.top,
+					to: containerOffset.top + $container.height() - $this.outerHeight() - pad.bottom,
+					end: containerOffset.top + $container.height(),
+					parentTop: parentOffset.top
+				});
 
-                $this.css({width: $this.outerWidth()});
-                $this.parent().css("height", $this.outerHeight());
-            }
-        };
+				$this.css({width: $this.outerWidth()});
+				$this.parent().css("height", $this.outerHeight());
+			}
+		};
 
-        var onScroll = function () {
-            if (disabled) { return; }
+		var onScroll = function () {
+			if (disabled) { return; }
 
-            scrollY = $window.scrollTop();
+			scrollY = $window.scrollTop();
 
-            var elmts = [];
-            for (var i=0, len=elements.length; i<len; i++) {          
-                var $this = $(elements[i]),
-                    data  = $this.data("pin");
+			var elmts = [];
+			for (var i=0, len=elements.length; i<len; i++) {          
+				var $this = $(elements[i]),
+					data  = $this.data("pin");
 
-                if (!data) { // Removed element
-                  continue;
-                }
+				if (!data) { // Removed element
+				  continue;
+				}
 
-                elmts.push($this); 
-                  
-                var from = data.from - data.pad.bottom,
-                    to = data.to - data.pad.top;
-              
-                if (from + $this.outerHeight() > data.end) {
-                    $this.css('position', '');
-                    continue;
-                }
-              
-                if (from < scrollY && to > scrollY) {
-                    !($this.css("position") == "fixed") && $this.css({
-                        left: $this.offset().left,
-                        top: data.pad.top
-                    }).css("position", "fixed");
-                    if (options.activeClass) { $this.addClass(options.activeClass); }
-                } else if (scrollY >= to) {
-                    $this.css({
-                        left: "",
-                        top: to - data.parentTop + data.pad.top
-                    }).css("position", "absolute");
-                    if (options.activeClass) { $this.addClass(options.activeClass); }
-                } else {
-                    $this.css({position: "", top: "", left: ""});
-                    if (options.activeClass) { $this.removeClass(options.activeClass); }
-                }
-          }
-          elements = elmts;
-        };
+				elmts.push($this); 
+				  
+				var from = data.from - data.pad.bottom,
+					to = data.to - data.pad.top;
+			  
+				if (from + $this.outerHeight() > data.end) {
+					$this.css('position', '');
+					continue;
+				}
+			  
+				if (from < scrollY && to > scrollY) {
+					!($this.css("position") == "fixed") && $this.css({
+						left: $this.offset().left,
+						top: data.pad.top
+					}).css("position", "fixed");
+					if (options.activeClass) { $this.addClass(options.activeClass); }
+				} else if (scrollY >= to) {
+					$this.css({
+						left: "",
+						top: to - data.parentTop + data.pad.top
+					}).css("position", "absolute");
+					if (options.activeClass) { $this.addClass(options.activeClass); }
+				} else {
+					$this.css({position: "", top: "", left: ""});
+					if (options.activeClass) { $this.removeClass(options.activeClass); }
+				}
+		  }
+		  elements = elmts;
+		};
 
-        var update = function () { recalculateLimits(); onScroll(); };
+		var update = function () { recalculateLimits(); onScroll(); };
 
-        this.each(function () {
-            var $this = $(this), 
-                data  = $(this).data('pin') || {};
+		this.each(function () {
+			var $this = $(this), 
+				data  = $(this).data('pin') || {};
 
-            if (data && data.update) { return; }
-            elements.push($this);
-            $("img", this).one("load", recalculateLimits);
-            data.update = update;
-            $(this).data('pin', data);
-        });
+			if (data && data.update) { return; }
+			elements.push($this);
+			$("img", this).one("load", recalculateLimits);
+			data.update = update;
+			$(this).data('pin', data);
+		});
 
-        $window.scroll(onScroll);
-        $window.resize(function () { recalculateLimits(); });
-        recalculateLimits();
+		$window.scroll(onScroll);
+		$window.resize(function () { recalculateLimits(); });
+		recalculateLimits();
 
-        $window.load(update);
+		$window.on('load', update);
 
-        return this;
-      };
+		return this;
+	  };
 })(jQuery);
 
 /*
-Plugin Name: 	smoothScroll for jQuery.
-Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
-
-Based on:
-
-	SmoothScroll v1.2.1
-	Licensed under the terms of the MIT license.
-
-	People involved
-	 - Balazs Galambosi (maintainer)
-	 - Patrick Brunner  (original idea)
-	 - Michael Herf     (Pulse Algorithm)
-
+Browser Workarounds
 */
-
-(function($) {
-	$.extend({
-
-		smoothScroll: function() {
-
-			// Scroll Variables (tweakable)
-			var defaults = {
-
-				// Scrolling Core
-				frameRate        : 60, // [Hz]
-				animationTime    : 700, // [px]
-				stepSize         : 120, // [px]
-
-				// Pulse (less tweakable)
-				// ratio of "tail" to "acceleration"
-				pulseAlgorithm   : true,
-				pulseScale       : 10,
-				pulseNormalize   : 1,
-
-				// Acceleration
-				accelerationDelta : 20,  // 20
-				accelerationMax   : 1,   // 1
-
-				// Keyboard Settings
-				keyboardSupport   : true,  // option
-				arrowScroll       : 50,     // [px]
-
-				// Other
-				touchpadSupport   : true,
-				fixedBackground   : true,
-				excluded          : ""
-			};
-
-			var options = defaults;
-
-			// Other Variables
-			var isExcluded = false;
-			var isFrame = false;
-			var direction = { x: 0, y: 0 };
-			var initDone  = false;
-			var root = document.documentElement;
-			var activeElement;
-			var observer;
-			var deltaBuffer = [ 120, 120, 120 ];
-
-			var key = { left: 37, up: 38, right: 39, down: 40, spacebar: 32,
-						pageup: 33, pagedown: 34, end: 35, home: 36 };
-
-
-			/***********************************************
-			 * INITIALIZE
-			 ***********************************************/
-
-			/**
-			 * Tests if smooth scrolling is allowed. Shuts down everything if not.
-			 */
-			function initTest() {
-
-				var disableKeyboard = false;
-
-				// disable keys for google reader (spacebar conflict)
-				if (document.URL.indexOf("google.com/reader/view") > -1) {
-					disableKeyboard = true;
-				}
-
-				// disable everything if the page is blacklisted
-				if (options.excluded) {
-					var domains = options.excluded.split(/[,\n] ?/);
-					domains.push("mail.google.com"); // exclude Gmail for now
-					for (var i = domains.length; i--;) {
-						if (document.URL.indexOf(domains[i]) > -1) {
-							observer && observer.disconnect();
-							removeEvent("mousewheel", wheel);
-							disableKeyboard = true;
-							isExcluded = true;
-							break;
-						}
-					}
-				}
-
-				// disable keyboard support if anything above requested it
-				if (disableKeyboard) {
-					removeEvent("keydown", keydown);
-				}
-
-				if (options.keyboardSupport && !disableKeyboard) {
-					addEvent("keydown", keydown);
-				}
-			}
-
-			/**
-			 * Sets up scrolls array, determines if frames are involved.
-			 */
-			function init() {
-
-				if (!document.body) return;
-
-				var body = document.body;
-				var html = document.documentElement;
-				var windowHeight = window.innerHeight;
-				var scrollHeight = body.scrollHeight;
-
-				// check compat mode for root element
-				root = (document.compatMode.indexOf('CSS') >= 0) ? html : body;
-				activeElement = body;
-
-				initTest();
-				initDone = true;
-
-				// Checks if this script is running in a frame
-				if (top != self) {
-					isFrame = true;
-				}
-
-				/**
-				 * This fixes a bug where the areas left and right to
-				 * the content does not trigger the onmousewheel event
-				 * on some pages. e.g.: html, body { height: 100% }
-				 */
-				else if (scrollHeight > windowHeight &&
-						(body.offsetHeight <= windowHeight ||
-						 html.offsetHeight <= windowHeight)) {
-
-					// DOMChange (throttle): fix height
-					var pending = false;
-					var refresh = function () {
-						if (!pending && html.scrollHeight != document.height) {
-							pending = true; // add a new pending action
-							setTimeout(function () {
-								html.style.height = document.height + 'px';
-								pending = false;
-							}, 500); // act rarely to stay fast
-						}
-					};
-					html.style.height = 'auto';
-					setTimeout(refresh, 10);
-
-					var config = {
-						attributes: true,
-						childList: true,
-						characterData: false
-					};
-
-					observer = new MutationObserver(refresh);
-					observer.observe(body, config);
-
-					// clearfix
-					if (root.offsetHeight <= windowHeight) {
-						var underlay = document.createElement("div");
-						underlay.style.clear = "both";
-						body.appendChild(underlay);
-					}
-				}
-
-				// gmail performance fix
-				if (document.URL.indexOf("mail.google.com") > -1) {
-					var s = document.createElement("style");
-					s.innerHTML = ".iu { visibility: hidden }";
-					(document.getElementsByTagName("head")[0] || html).appendChild(s);
-				}
-				// facebook better home timeline performance
-				// all the HTML resized images make rendering CPU intensive
-				else if (document.URL.indexOf("www.facebook.com") > -1) {
-					var home_stream = document.getElementById("home_stream");
-					home_stream && (home_stream.style.webkitTransform = "translateZ(0)");
-				}
-				// disable fixed background
-				if (!options.fixedBackground && !isExcluded) {
-					body.style.backgroundAttachment = "scroll";
-					html.style.backgroundAttachment = "scroll";
-				}
-			}
-
-
-			/************************************************
-			 * SCROLLING
-			 ************************************************/
-
-			var que = [];
-			var pending = false;
-			var lastScroll = +new Date;
-
-			/**
-			 * Pushes scroll actions to the scrolling queue.
-			 */
-			function scrollArray(elem, left, top, delay) {
-
-				delay || (delay = 1000);
-				directionCheck(left, top);
-
-				if (options.accelerationMax != 1) {
-					var now = +new Date;
-					var elapsed = now - lastScroll;
-					if (elapsed < options.accelerationDelta) {
-						var factor = (1 + (30 / elapsed)) / 2;
-						if (factor > 1) {
-							factor = Math.min(factor, options.accelerationMax);
-							left *= factor;
-							top  *= factor;
-						}
-					}
-					lastScroll = +new Date;
-				}
-
-				// push a scroll command
-				que.push({
-					x: left,
-					y: top,
-					lastX: (left < 0) ? 0.99 : -0.99,
-					lastY: (top  < 0) ? 0.99 : -0.99,
-					start: +new Date
-				});
-
-				// don't act if there's a pending queue
-				if (pending) {
-					return;
-				}
-
-				var scrollWindow = (elem === document.body);
-
-				var step = function (time) {
-
-					var now = +new Date;
-					var scrollX = 0;
-					var scrollY = 0;
-
-					for (var i = 0; i < que.length; i++) {
-
-						var item = que[i];
-						var elapsed  = now - item.start;
-						var finished = (elapsed >= options.animationTime);
-
-						// scroll position: [0, 1]
-						var position = (finished) ? 1 : elapsed / options.animationTime;
-
-						// easing [optional]
-						if (options.pulseAlgorithm) {
-							position = pulse(position);
-						}
-
-						// only need the difference
-						var x = (item.x * position - item.lastX) >> 0;
-						var y = (item.y * position - item.lastY) >> 0;
-
-						// add this to the total scrolling
-						scrollX += x;
-						scrollY += y;
-
-						// update last values
-						item.lastX += x;
-						item.lastY += y;
-
-						// delete and step back if it's over
-						if (finished) {
-							que.splice(i, 1); i--;
-						}
-					}
-
-					// scroll left and top
-					if (scrollWindow) {
-						window.scrollBy(scrollX, scrollY);
-					}
-					else {
-						if (scrollX) elem.scrollLeft += scrollX;
-						if (scrollY) elem.scrollTop  += scrollY;
-					}
-
-					// clean up if there's nothing left to do
-					if (!left && !top) {
-						que = [];
-					}
-
-					if (que.length) {
-						requestFrame(step, elem, (delay / options.frameRate + 1));
-					} else {
-						pending = false;
-					}
-				};
-
-				// start a new queue of actions
-				requestFrame(step, elem, 0);
-				pending = true;
-			}
-
-
-			/***********************************************
-			 * EVENTS
-			 ***********************************************/
-
-			/**
-			 * Mouse wheel handler.
-			 * @param {Object} event
-			 */
-			function wheel(event) {
-
-				if (!initDone) {
-					init();
-				}
-
-				var target = event.target;
-				var overflowing = overflowingAncestor(target);
-
-				// use default if there's no overflowing
-				// element or default action is prevented
-				if (!overflowing || event.defaultPrevented ||
-					isNodeName(activeElement, "embed") ||
-				   (isNodeName(target, "embed") && /\.pdf/i.test(target.src))) {
-					return true;
-				}
-
-				var deltaX = event.wheelDeltaX || 0;
-				var deltaY = event.wheelDeltaY || 0;
-
-				// use wheelDelta if deltaX/Y is not available
-				if (!deltaX && !deltaY) {
-					deltaY = event.wheelDelta || 0;
-				}
-
-				// check if it's a touchpad scroll that should be ignored
-				if (!options.touchpadSupport && isTouchpad(deltaY)) {
-					return true;
-				}
-
-				// scale by step size
-				// delta is 120 most of the time
-				// synaptics seems to send 1 sometimes
-				if (Math.abs(deltaX) > 1.2) {
-					deltaX *= options.stepSize / 120;
-				}
-				if (Math.abs(deltaY) > 1.2) {
-					deltaY *= options.stepSize / 120;
-				}
-
-				scrollArray(overflowing, -deltaX, -deltaY);
-				event.preventDefault();
-			}
-
-			/**
-			 * Keydown event handler.
-			 * @param {Object} event
-			 */
-			function keydown(event) {
-
-				var target   = event.target;
-				var modifier = event.ctrlKey || event.altKey || event.metaKey ||
-							  (event.shiftKey && event.keyCode !== key.spacebar);
-
-				// do nothing if user is editing text
-				// or using a modifier key (except shift)
-				// or in a dropdown
-				if ( /input|textarea|select|embed/i.test(target.nodeName) ||
-					 target.isContentEditable ||
-					 event.defaultPrevented   ||
-					 modifier ) {
-				  return true;
-				}
-				// spacebar should trigger button press
-				if (isNodeName(target, "button") &&
-					event.keyCode === key.spacebar) {
-				  return true;
-				}
-
-				var shift, x = 0, y = 0;
-				var elem = overflowingAncestor(activeElement);
-				var clientHeight = elem.clientHeight;
-
-				if (elem == document.body) {
-					clientHeight = window.innerHeight;
-				}
-
-				switch (event.keyCode) {
-					case key.up:
-						y = -options.arrowScroll;
-						break;
-					case key.down:
-						y = options.arrowScroll;
-						break;
-					case key.spacebar: // (+ shift)
-						shift = event.shiftKey ? 1 : -1;
-						y = -shift * clientHeight * 0.9;
-						break;
-					case key.pageup:
-						y = -clientHeight * 0.9;
-						break;
-					case key.pagedown:
-						y = clientHeight * 0.9;
-						break;
-					case key.home:
-						y = -elem.scrollTop;
-						break;
-					case key.end:
-						var damt = elem.scrollHeight - elem.scrollTop - clientHeight;
-						y = (damt > 0) ? damt+10 : 0;
-						break;
-					case key.left:
-						x = -options.arrowScroll;
-						break;
-					case key.right:
-						x = options.arrowScroll;
-						break;
-					default:
-						return true; // a key we don't care about
-				}
-
-				scrollArray(elem, x, y);
-				event.preventDefault();
-			}
-
-			/**
-			 * Mousedown event only for updating activeElement
-			 */
-			function mousedown(event) {
-				activeElement = event.target;
-			}
-
-
-			/***********************************************
-			 * OVERFLOW
-			 ***********************************************/
-
-			var cache = {}; // cleared out every once in while
-			setInterval(function () { cache = {}; }, 10 * 1000);
-
-			var uniqueID = (function () {
-				var i = 0;
-				return function (el) {
-					return el.uniqueID || (el.uniqueID = i++);
-				};
-			})();
-
-			function setCache(elems, overflowing) {
-				for (var i = elems.length; i--;)
-					cache[uniqueID(elems[i])] = overflowing;
-				return overflowing;
-			}
-
-			function overflowingAncestor(el) {
-				var elems = [];
-				var rootScrollHeight = root.scrollHeight;
-				do {
-					var cached = cache[uniqueID(el)];
-					if (cached) {
-						return setCache(elems, cached);
-					}
-					elems.push(el);
-					if (rootScrollHeight === el.scrollHeight) {
-						if (!isFrame || root.clientHeight + 10 < rootScrollHeight) {
-							return setCache(elems, document.body); // scrolling root in WebKit
-						}
-					} else if (el.clientHeight + 10 < el.scrollHeight) {
-						overflow = getComputedStyle(el, "").getPropertyValue("overflow-y");
-						if (overflow === "scroll" || overflow === "auto") {
-							return setCache(elems, el);
-						}
-					}
-				} while (el = el.parentNode);
-			}
-
-
-			/***********************************************
-			 * HELPERS
-			 ***********************************************/
-
-			function addEvent(type, fn, bubble) {
-				window.addEventListener(type, fn, (bubble||false));
-			}
-
-			function removeEvent(type, fn, bubble) {
-				window.removeEventListener(type, fn, (bubble||false));
-			}
-
-			function isNodeName(el, tag) {
-				return (el.nodeName||"").toLowerCase() === tag.toLowerCase();
-			}
-
-			function directionCheck(x, y) {
-				x = (x > 0) ? 1 : -1;
-				y = (y > 0) ? 1 : -1;
-				if (direction.x !== x || direction.y !== y) {
-					direction.x = x;
-					direction.y = y;
-					que = [];
-					lastScroll = 0;
-				}
-			}
-
-			var deltaBufferTimer;
-
-			function isTouchpad(deltaY) {
-				if (!deltaY) return;
-				deltaY = Math.abs(deltaY)
-				deltaBuffer.push(deltaY);
-				deltaBuffer.shift();
-				clearTimeout(deltaBufferTimer);
-				var allEquals    = (deltaBuffer[0] == deltaBuffer[1] &&
-									deltaBuffer[1] == deltaBuffer[2]);
-				var allDivisable = (isDivisible(deltaBuffer[0], 120) &&
-									isDivisible(deltaBuffer[1], 120) &&
-									isDivisible(deltaBuffer[2], 120));
-				return !(allEquals || allDivisable);
-			}
-
-			function isDivisible(n, divisor) {
-				return (Math.floor(n / divisor) == n / divisor);
-			}
-
-			var requestFrame = (function () {
-				  return  window.requestAnimationFrame       ||
-						  window.webkitRequestAnimationFrame ||
-						  function (callback, element, delay) {
-							  window.setTimeout(callback, delay || (1000/60));
-						  };
-			})();
-
-			var MutationObserver = window.MutationObserver || window.WebKitMutationObserver;
-
-
-			/***********************************************
-			 * PULSE
-			 ***********************************************/
-
-			/**
-			 * Viscous fluid with a pulse for part and decay for the rest.
-			 * - Applies a fixed force over an interval (a damped acceleration), and
-			 * - Lets the exponential bleed away the velocity over a longer interval
-			 * - Michael Herf, http://stereopsis.com/stopping/
-			 */
-			function pulse_(x) {
-				var val, start, expx;
-				// test
-				x = x * options.pulseScale;
-				if (x < 1) { // acceleartion
-					val = x - (1 - Math.exp(-x));
-				} else {     // tail
-					// the previous animation ended here:
-					start = Math.exp(-1);
-					// simple viscous drag
-					x -= 1;
-					expx = 1 - Math.exp(-x);
-					val = start + (expx * (1 - start));
-				}
-				return val * options.pulseNormalize;
-			}
-
-			function pulse(x) {
-				if (x >= 1) return 1;
-				if (x <= 0) return 0;
-
-				if (options.pulseNormalize == 1) {
-					options.pulseNormalize /= pulse_(1);
-				}
-				return pulse_(x);
-			}
-
-			addEvent("mousedown", mousedown);
-			addEvent("mousewheel", wheel);
-			addEvent("load", init);
-
+if (/iPad|iPhone|iPod/.test(navigator.platform)) {
+
+	// iPad/Iphone/iPod Hover Workaround
+	$(document).ready(function($) {
+		$('.thumb-info').attr('onclick', 'return true');
+	});
+}
+
+/* jQuery-FontSpy.js v3.0.0
+ * https://github.com/patrickmarabeas/jQuery-FontSpy.js
+ *
+ * Copyright 2013, Patrick Marabeas http://pulse-dev.com
+ * Released under the MIT license
+ * http://opensource.org/licenses/mit-license.php
+ *
+ * Date: 02/11/2015
+ */
+
+(function( w, $ ) {
+
+  fontSpy = function  ( fontName, conf ) {
+	var $html = $('html'),
+		$body = $('body'),
+		fontFamilyName = fontName;
+
+		// Throw error if fontName is not a string or not is left as an empty string
+		if (typeof fontFamilyName !== 'string' || fontFamilyName === '') {
+		  throw 'A valid fontName is required. fontName must be a string and must not be an empty string.';
 		}
 
-	});
+	var defaults = {
+		font: fontFamilyName,
+		fontClass: fontFamilyName.toLowerCase().replace( /\s/g, '' ),
+		success: function() {},
+		failure: function() {},
+		testFont: 'Courier New',
+		testString: 'QW@HhsXJ',
+		glyphs: '',
+		delay: 50,
+		timeOut: 1000,
+		callback: $.noop
+	};
 
-	if (navigator.userAgent.toLowerCase().indexOf('chrome') > -1) {
-		$.smoothScroll();
+	var config = $.extend( defaults, conf );
+
+	var $tester = $('<span>' + config.testString+config.glyphs + '</span>')
+		.css('position', 'absolute')
+		.css('top', '-9999px')
+		.css('left', '-9999px')
+		.css('visibility', 'hidden')
+		.css('fontFamily', config.testFont)
+		.css('fontSize', '250px');
+
+	$body.append($tester);
+
+	var fallbackFontWidth = $tester.outerWidth();
+
+	$tester.css('fontFamily', config.font + ',' + config.testFont);
+
+	var failure = function () {
+	  $html.addClass("no-"+config.fontClass);
+	  if( config && config.failure ) {
+		config.failure();
+	  }
+	  config.callback(new Error('FontSpy timeout'));
+	  $tester.remove();
+	};
+
+	var success = function () {
+	  config.callback();
+	  $html.addClass(config.fontClass);
+	  if( config && config.success ) {
+		config.success();
+	  }
+	  $tester.remove();
+	};
+
+	var retry = function () {
+	  setTimeout(checkFont, config.delay);
+	  config.timeOut = config.timeOut - config.delay;
+	};
+
+	var checkFont = function () {
+	  var loadedFontWidth = $tester.outerWidth();
+
+	  if (fallbackFontWidth !== loadedFontWidth){
+		success();
+	  } else if(config.timeOut < 0) {
+		failure();
+	  } else {
+		retry();
+	  }
 	}
+
+	checkFont();
+	}
+  })( this, jQuery );
+
+/* waitForImages jQuery Plugin - v2.4.0 - 2018-02-13
+ * https://github.com/alexanderdickson/waitForImages
+ *
+ * Copyright (c) 2016 Alex Dickson; Licensed MIT
+ */
+;(function (factory) {
+    if (typeof define === 'function' && define.amd) {
+        // AMD. Register as an anonymous module.
+        define(['jquery'], factory);
+    } else if (typeof exports === 'object') {
+        // CommonJS / nodejs module
+        module.exports = factory(require('jquery'));
+    } else {
+        // Browser globals
+        factory(jQuery);
+    }
+}(function ($) {
+    // Namespace all events.
+    var eventNamespace = 'waitForImages';
+
+    // Is srcset supported by this browser?
+    var hasSrcset = (function(img) {
+        return img.srcset && img.sizes;
+    })(new Image());
+
+    // CSS properties which contain references to images.
+    $.waitForImages = {
+        hasImageProperties: [
+            'backgroundImage',
+            'listStyleImage',
+            'borderImage',
+            'borderCornerImage',
+            'cursor'
+        ],
+        hasImageAttributes: ['srcset']
+    };
+
+    // Custom selector to find all `img` elements with a valid `src` attribute.
+    $.expr.pseudos['has-src'] = function (obj) {
+        // Ensure we are dealing with an `img` element with a valid
+        // `src` attribute.
+        return $(obj).is('img[src][src!=""]');
+    };
+
+    // Custom selector to find images which are not already cached by the
+    // browser.
+    $.expr.pseudos.uncached = function (obj) {
+        // Ensure we are dealing with an `img` element with a valid
+        // `src` attribute.
+        if (!$(obj).is(':has-src')) {
+            return false;
+        }
+
+        return !obj.complete;
+    };
+
+    $.fn.waitForImages = function () {
+
+        var allImgsLength = 0;
+        var allImgsLoaded = 0;
+        var deferred = $.Deferred();
+        var originalCollection = this;
+        var allImgs = [];
+
+        // CSS properties which may contain an image.
+        var hasImgProperties = $.waitForImages.hasImageProperties || [];
+        // Element attributes which may contain an image.
+        var hasImageAttributes = $.waitForImages.hasImageAttributes || [];
+        // To match `url()` references.
+        // Spec: http://www.w3.org/TR/CSS2/syndata.html#value-def-uri
+        var matchUrl = /url\(\s*(['"]?)(.*?)\1\s*\)/g;
+
+        var finishedCallback;
+        var eachCallback;
+        var waitForAll;
+
+        // Handle options object (if passed).
+        if ($.isPlainObject(arguments[0])) {
+
+            waitForAll = arguments[0].waitForAll;
+            eachCallback = arguments[0].each;
+            finishedCallback = arguments[0].finished;
+
+        } else {
+
+            // Handle if using deferred object and only one param was passed in.
+            if (arguments.length === 1 && $.type(arguments[0]) === 'boolean') {
+                waitForAll = arguments[0];
+            } else {
+                finishedCallback = arguments[0];
+                eachCallback = arguments[1];
+                waitForAll = arguments[2];
+            }
+
+        }
+
+        // Handle missing callbacks.
+        finishedCallback = finishedCallback || $.noop;
+        eachCallback = eachCallback || $.noop;
+
+        // Convert waitForAll to Boolean.
+        waitForAll = !! waitForAll;
+
+        // Ensure callbacks are functions.
+        if (!$.isFunction(finishedCallback) || !$.isFunction(eachCallback)) {
+            throw new TypeError('An invalid callback was supplied.');
+        }
+
+        this.each(function () {
+            // Build a list of all imgs, dependent on what images will
+            // be considered.
+            var obj = $(this);
+
+            if (waitForAll) {
+
+                // Get all elements (including the original), as any one of
+                // them could have a background image.
+                obj.find('*').addBack().each(function () {
+                    var element = $(this);
+
+                    // If an `img` element, add it. But keep iterating in
+                    // case it has a background image too.
+                    if (element.is('img:has-src') &&
+                        !element.is('[srcset]')) {
+                        allImgs.push({
+                            src: element.attr('src'),
+                            element: element[0]
+                        });
+                    }
+
+                    $.each(hasImgProperties, function (i, property) {
+                        var propertyValue = element.css(property);
+                        var match;
+
+                        // If it doesn't contain this property, skip.
+                        if (!propertyValue) {
+                            return true;
+                        }
+
+                        // Get all url() of this element.
+                        while (match = matchUrl.exec(propertyValue)) {
+                            allImgs.push({
+                                src: match[2],
+                                element: element[0]
+                            });
+                        }
+                    });
+
+                    $.each(hasImageAttributes, function (i, attribute) {
+                        var attributeValue = element.attr(attribute);
+                        var attributeValues;
+
+                        // If it doesn't contain this property, skip.
+                        if (!attributeValue) {
+                            return true;
+                        }
+
+                        allImgs.push({
+                            src: element.attr('src'),
+                            srcset: element.attr('srcset'),
+                            element: element[0]
+                        });
+                    });
+                });
+            } else {
+                // For images only, the task is simpler.
+                obj.find('img:has-src')
+                    .each(function () {
+                    allImgs.push({
+                        src: this.src,
+                        element: this
+                    });
+                });
+            }
+        });
+
+        allImgsLength = allImgs.length;
+        allImgsLoaded = 0;
+
+        // If no images found, don't bother.
+        if (allImgsLength === 0) {
+            finishedCallback.call(originalCollection);
+            deferred.resolveWith(originalCollection);
+        }
+
+        // Now that we've found all imgs in all elements in this,
+        // load them and attach callbacks.
+        $.each(allImgs, function (i, img) {
+
+            var image = new Image();
+            var events =
+              'load.' + eventNamespace + ' error.' + eventNamespace;
+
+            // Handle the image loading and error with the same callback.
+            $(image).one(events, function me (event) {
+                // If an error occurred with loading the image, set the
+                // third argument accordingly.
+                var eachArguments = [
+                    allImgsLoaded,
+                    allImgsLength,
+                    event.type == 'load'
+                ];
+                allImgsLoaded++;
+
+                eachCallback.apply(img.element, eachArguments);
+                deferred.notifyWith(img.element, eachArguments);
+
+                // Unbind the event listeners. I use this in addition to
+                // `one` as one of those events won't be called (either
+                // 'load' or 'error' will be called).
+                $(this).off(events, me);
+
+                if (allImgsLoaded == allImgsLength) {
+                    finishedCallback.call(originalCollection[0]);
+                    deferred.resolveWith(originalCollection[0]);
+                    return false;
+                }
+
+            });
+
+            if (hasSrcset && img.srcset) {
+                image.srcset = img.srcset;
+                image.sizes = img.sizes;
+            }
+            image.src = img.src;
+        });
+
+        return deferred.promise();
+
+    };
+}));
+
+// Tooltip and Popover
+(function($) {
+	$('[data-toggle="tooltip"]').tooltip();
+	$('[data-toggle="popover"]').popover();
+})(jQuery);
+
+// Tabs
+$('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
+	$(this).parents('.nav-tabs').find('.active').removeClass('active');
+	$(this).addClass('active').parent().addClass('active');
+});
+
+// On Load Scroll
+if( !$('html').hasClass('disable-onload-scroll') && window.location.hash ) {
+
+	window.scrollTo(0, 0);
+
+	$(window).on('load', function() {
+		setTimeout(function() {
+
+			var target = window.location.hash,
+				offset = ( $(window).width() < 768 ) ? 180 : 90;
+
+			$('body').addClass('scrolling');
+
+			$('html, body').animate({
+				scrollTop: $(target).offset().top - offset
+			}, 600, 'easeOutQuad', function() {
+				$('body').removeClass('scrolling');
+			});
+
+		}, 1);
+	});
+}
+
+/*
+* Footer Reveal
+*/
+(function($) {
+	var $footerReveal = {
+		$wrapper: $('.footer-reveal'),
+		init: function() {
+			var self = this;
+
+			self.build();
+			self.events();
+		},
+		build: function() {
+			var self = this, 
+				footer_height = self.$wrapper.outerHeight(true),
+				window_height = ( $(window).height() - $('.header-body').height() );
+
+			if( footer_height > window_height ) {
+				$('#footer').removeClass('footer-reveal');
+				$('.main').css('margin-bottom', 0);
+			} else {
+				$('#footer').addClass('footer-reveal');
+				$('.main').css('margin-bottom', footer_height);
+			}
+
+		},
+		events: function() {
+			var self = this,
+				$window = $(window);
+
+			$window.on('load', function(){
+				$window.afterResize(function(){
+					self.build();
+				});
+			});
+		}
+	}
+
+	if( $('.footer-reveal').get(0) ) {
+		$footerReveal.init();
+	}
+})(jQuery);
+
+/*
+* Notice Top bar
+*/
+(function($) {
+	var $noticeTopBar = {
+		$wrapper: $('.notice-top-bar'),
+		$body: $('.body'),
+		init: function() {
+			var self = this;
+
+			self.build();
+		},
+		build: function(){
+			var self = this;
+
+			$(window).on('load', function(){
+				setTimeout(function(){
+					self.$body.css({
+						'margin-top': self.$wrapper.outerHeight(),
+						'transition': 'ease margin 300ms'
+					});
+				}, 1000);
+			});
+		}
+	}
+
+	if( $('.notice-top-bar').get(0) ) {
+		$noticeTopBar.init();
+	}
+})(jQuery);
+
+/*
+* Notice Top bar
+*/
+(function($) {
+	$('.close-theme-switcher-bar').on('click', function(){
+		$(this).closest('.header-top').css({
+			height: 0,
+			overflow: 'hidden'
+		})
+	});
 })(jQuery);

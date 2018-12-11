@@ -18,12 +18,13 @@ a {
 // Font Colors
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
 
 		.heading-@{name},
 		.lnk-@{name},
-		.text-color-@{name} {
+		.text-color-@{name},
+		.text-@{name} {
 			color: @color !important;
 		}
 
@@ -38,8 +39,8 @@ html {
 // Background Colors
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
 
 		.background-color-@{name} {
 			background-color: @color !important;
@@ -55,8 +56,8 @@ html {
 // Blockquote
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
 
 		.blockquote-@{name} {
 			border-color: @color !important;
@@ -66,30 +67,43 @@ html {
 
 // Drop Caps
 p.drop-caps {
-	&:first-child:first-letter {
+	&:first-letter {
 		color: @color-primary;
 	}
-	&.drop-caps-style-2:first-child:first-letter {
+	&.drop-caps-style-2:first-letter {
 		background-color: @color-primary;
 	}
 }
 
 // Nav
-ul.nav-pills > li.active > a {
+.nav-pills > li.active > a,
+.nav-pills .nav-link.active {
 	background-color: @color-primary;
 	&:hover, &:focus {
 		background-color: @color-primary;
 	}
 }
 
-// Labels
+.nav-active-style-1 {
+	> li {
+		> a {
+			&:hover,
+			&:focus,
+			&.active {
+				border-bottom-color: @color-primary;
+			}
+		}
+	}
+}
+
+// Nav Pills
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
-		ul.nav-pills-@{name} {
+		.nav-pills-@{name} {
 			a {
 				color: @color;
 				&:hover {
@@ -102,6 +116,7 @@ html {
 					color: darken(@color, 5%);
 				}
 			}
+			.nav-link.active,
 			> li.active > a {
 				background-color: @color;
 				&:hover, &:focus {
@@ -123,25 +138,25 @@ html {
 .sort-source {
 	 &.sort-source-style-2 {
 		 > li {
-		 	&.active {
-		 		> a {
+			&.active {
+				> a {
 					&:after {
 						border-top-color: @color-primary;
 					}
-		 		}
-		 	}
+				}
+			}
 		 }
 	 }
 }
 
-// Labels
+// Badges
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
-		.label-@{name} {
+		.badge-@{name} {
 			background-color: @color;
 		}
 	}
@@ -160,42 +175,29 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.btn-@{name} {
-			border-color: @color @color darken(@color, 10%);
-			.buttonBackground(@color, spin(@color, 20%));
-			&:hover, &:focus {
-				color: @color-inverse;
-			}
+			.buttonBackground(@color, @color-inverse);
 		}
 
 		.btn-@{name}-scale-2 {
-			border-color: darken(@color, 10%) darken(@color, 10%) darken(@color, 20%);
-			.buttonBackground(darken(@color, 10%), spin(@color, 30%));
+			.buttonBackground(darken(@color, 10%), @color-inverse);
 		}
 	}
 }
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
-		.btn-borders {
+		.btn-outline {
 			&.btn-@{name} {
-				background: transparent;
-				border-color: @color;
-				color: @color;
-				text-shadow: none;
-				&:hover, &:focus {
-					.buttonBackground(@color, spin(@color, 20%));
-					border-color: @color !important;
-					color: @color-inverse;
-				}
+				.buttonOutlineBackground(@color, @color-inverse);
 			}
 		}
 	}
@@ -216,7 +218,8 @@ html {
 	> .active > a:hover,
 	> .active > span:hover,
 	> .active > a:focus,
-	> .active > span:focus {
+	> .active > span:focus,
+	.page-item.active .page-link {
 		background-color: @color-primary !important;
 		border-color: @color-primary;
 	}
@@ -245,15 +248,15 @@ body.dark .pagination {
 .pagination > .active > a,
 body.dark .pagination > .active > a {
 	border-color: @color-primary @color-primary darken(@color-primary, 10%);
-	.buttonBackground(@color-primary, spin(@color-primary, 20%));
+	.buttonBackground(@color-primary);
 }
 
 // Alerts
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.alert-@{name} {
 			background-color: @color;
@@ -270,8 +273,8 @@ html {
 // Progress Bar
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
 
 		.progress-bar-@{name} {
 			background-color: @color;
@@ -282,9 +285,9 @@ html {
 // Sections
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		section.section-@{name} {
 			background-color: @color !important;
@@ -306,13 +309,13 @@ html {
 			.sort-source {
 				 &.sort-source-style-2 {
 					 > li {
-					 	&.active {
-					 		> a {
+						&.active {
+							> a {
 								&:after {
 									border-top-color: darken(@color, 10%);
 								}
-					 		}
-					 	}
+							}
+						}
 					 }
 				 }
 			}
@@ -323,7 +326,7 @@ html {
 html {
 	.for(@color-background-scale); .-each(@value) {
 		@index:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@color:  extract(@value, 2);
 
 		section.section-default-scale-@{index} {
 			background-color: @color !important;
@@ -335,7 +338,7 @@ html {
 html.dark {
 	.for(@color-background-scale-dark); .-each(@value) {
 		@index:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@color:  extract(@value, 2);
 
 		section.section-default-scale-@{index} {
 			background-color: @color !important;
@@ -359,9 +362,9 @@ section.page-header {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.page-header-color.page-header-@{name} {
 			background-color: @color;
@@ -386,9 +389,9 @@ html {
 // Toggle
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.toggle-@{name} {
 			.toggle {
@@ -434,9 +437,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.thumb-info .thumb-info-action-icon-@{name} {
 			background-color: @color;
@@ -462,8 +465,8 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
 
 		.inverted-@{name} {
 			background-color: @color;
@@ -477,13 +480,48 @@ html {
 	background-color: darken(@color-primary, 6%);
 }
 
-.owl-carousel.show-nav-title .owl-nav [class*="owl-"] {
+.owl-carousel.show-nav-title .owl-nav button[class*="owl-"] {
 	color: @color-primary;
+	&:hover,
+	&.hover {
+		color: @color-primary;
+	}
 }
 
-.owl-carousel .owl-nav [class*="owl-"] {
+.owl-carousel .owl-nav button[class*="owl-"] {
+
+	background-color: @color-primary;
 	border-color: @color-primary @color-primary darken(@color-primary, 10%);
-	.buttonBackground(@color-primary, spin(@color-primary, 20%));
+	color: contrast(@color-primary, #777, #FFF);
+
+	&:hover,
+	&.hover {
+		background-color: lighten(@color-primary, 7.5%);
+		border-color: lighten(@color-primary, 10%) lighten(@color-primary, 10%) @color-primary;
+		color: contrast(@color-primary, #777, #FFF);
+	}
+
+	&:active,
+	&.active {
+		background-color: darken(@color-primary, 7.5%);
+		background-image: none;
+		border-color: darken(@color-primary, 10%) darken(@color-primary, 10%) darken(@color-primary, 20%);
+	}
+
+}
+
+.owl-carousel {
+	&.nav-style-1 {
+		.owl-nav {
+			.owl-next,
+			.owl-prev {
+				&:hover,
+				&:active {
+					color: @color-primary;
+				}
+			}
+		}
+	}
 }
 
 // Tabs
@@ -491,53 +529,64 @@ html body,
 html.dark body {
 	.tabs {
 		.nav-tabs {
-			a, a:hover {
+			.nav-link, .nav-link:hover {
 				color: @color-primary;
 			}
 
-			a:hover,
-			a:focus {
+			.nav-link:hover,
+			.nav-link:focus {
 				border-top-color: @color-primary;
 			}
 
-			li.active a {
+			li.active .nav-link {
 				border-top-color: @color-primary;
 				color: @color-primary;
 			}
 			&.nav-justified {
-				a:hover,
-				a:focus {
+				.nav-link:hover,
+				.nav-link:focus {
 					border-top-color: @color-primary;
 				}
 			}
 		}
 		&.tabs-bottom {
 			.nav-tabs {
-				li a:hover,
-				li.active a,
-				li.active a:hover,
-				li.active a:focus {
+				li .nav-link:hover,
+				li.active .nav-link,
+				li.active .nav-link:hover,
+				li.active .nav-link:focus {
 					border-bottom-color: @color-primary;
 				}
 			}
 		}
 		&.tabs-vertical.tabs-left {
 			.nav-tabs {
-				li a:hover,
-				li.active a,
-				li.active a:hover,
-				li.active a:focus {
+				li .nav-link:hover,
+				li.active .nav-link,
+				li.active .nav-link:hover,
+				li.active .nav-link:focus {
 					border-left-color: @color-primary;
 				}
 			}
 		}
 		&.tabs-vertical.tabs-right {
 			.nav-tabs {
-				li a:hover,
-				li.active a,
-				li.active a:hover,
-				li.active a:focus {
+				li .nav-link:hover,
+				li.active .nav-link,
+				li.active .nav-link:hover,
+				li.active .nav-link:focus {
 					border-right-color: @color-primary;
+				}
+			}
+		}
+		&.tabs-simple {
+			.nav-tabs {
+				> li.active .nav-link,
+				> li.active .nav-link:focus,
+				> li .nav-link:hover,
+				> li.active .nav-link:hover {
+					border-top-color: @color-primary;
+					color: @color-primary;
 				}
 			}
 		}
@@ -547,16 +596,16 @@ html.dark body {
 html body,
 html.dark body {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.tabs-@{name} {
 			.nav-tabs {
 				&,
 				&.nav-justified {
 					li {
-						a {
+						.nav-link {
 							&,
 							&:hover {
 								color: @color;
@@ -568,9 +617,9 @@ html.dark body {
 						}
 
 						&.active {
-							a,
-							a:hover,
-							a:focus {
+							.nav-link,
+							.nav-link:hover,
+							.nav-link:focus {
 								border-top-color: @color;
 								color: @color;
 							}
@@ -584,16 +633,16 @@ html.dark body {
 					&,
 					&.nav-justified {
 						li {
-							a {
+							.nav-link {
 								&:hover {
 									border-bottom-color: @color;
 								}
 							}
 
 							&.active {
-								a,
-								a:hover,
-								a:focus {
+								.nav-link,
+								.nav-link:hover,
+								.nav-link:focus {
 									border-bottom-color: @color;
 								}
 							}
@@ -605,16 +654,16 @@ html.dark body {
 			&.tabs-vertical {
 				&.tabs-left {
 					li {
-						a {
+						.nav-link {
 							&:hover {
 								border-left-color: @color;
 							}
 						}
 
 						&.active {
-							a,
-							a:hover,
-							a:focus {
+							.nav-link,
+							.nav-link:hover,
+							.nav-link:focus {
 								border-left-color: @color;
 							}
 						}
@@ -623,16 +672,16 @@ html.dark body {
 
 				&.tabs-right {
 					li {
-						a {
+						.nav-link {
 							&:hover {
 								border-right-color: @color;
 							}
 						}
 
 						&.active {
-							a,
-							a:hover,
-							a:focus {
+							.nav-link,
+							.nav-link:hover,
+							.nav-link:focus {
 								border-right-color: @color;
 							}
 						}
@@ -647,10 +696,10 @@ html[dir="rtl"] {
 	.tabs {
 		&.tabs-vertical.tabs-left {
 			.nav-tabs {
-				li a:hover,
-				li.active a,
-				li.active a:hover,
-				li.active a:focus {
+				li .nav-link:hover,
+				li.active .nav-link,
+				li.active .nav-link:hover,
+				li.active .nav-link:focus {
 					border-right-color: @color-primary;
 					border-left-color: transparent;
 				}
@@ -658,10 +707,10 @@ html[dir="rtl"] {
 		}
 		&.tabs-vertical.tabs-right {
 			.nav-tabs {
-				li a:hover,
-				li.active a,
-				li.active a:hover,
-				li.active a:focus {
+				li .nav-link:hover,
+				li.active .nav-link,
+				li.active .nav-link:hover,
+				li.active .nav-link:focus {
 					border-right-color: transparent;
 					border-left-color: @color-primary;
 				}
@@ -673,13 +722,31 @@ html[dir="rtl"] {
 // Lists
 .list {
 	&.list-icons {
-		li .fa, li .icons {
-			color: @color-primary;
-			border-color: @color-primary;
+		li {
+			&, a:first-child {
+				> .fa:first-child,
+				> .fas:first-child,
+				> .far:first-child,
+				> .fal:first-child,
+				> .fab:first-child,
+				> .icons:first-child {
+					color: @color-primary;
+					border-color: @color-primary;
+				}
+			}
 		}
 		&.list-icons-style-3 {
-			li .fa, li .icons {
-				background-color: @color-primary;
+			li {
+				&, a:first-child {
+					> .fa:first-child,
+					> .fas:first-child,
+					> .far:first-child,
+					> .fal:first-child,
+					> .fab:first-child,
+					> .icons:first-child {
+						background-color: @color-primary;
+					}
+				}
 			}
 		}
 	}
@@ -702,20 +769,38 @@ html[dir="rtl"] {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.list-@{name} {
 			&.list-icons {
-				li .fa, li .icons {
-					color: @color;
-					border-color: @color;
+				li {
+					&, a:first-child {
+						> .fa:first-child,
+						> .fas:first-child,
+						> .far:first-child,
+						> .fal:first-child,
+						> .fab:first-child,
+						> .icons:first-child {
+							color: @color;
+							border-color: @color;
+						}
+					}
 				}
 				&.list-icons-style-3 {
-					li .fa, li .icons {
-						background-color: @color;
-						color: @color-inverse;
+					li {
+						&, a:first-child {
+							> .fa:first-child,
+							> .fas:first-child,
+							> .far:first-child,
+							> .fal:first-child,
+							> .fab:first-child,
+							> .icons:first-child {
+								background-color: @color;
+								color: @color-inverse;
+							}
+						}
 					}
 				}
 			}
@@ -728,7 +813,7 @@ html {
 				&.list-ordened-style-3 {
 					li {
 						&:before {
-							background-color: @color-primary;
+							background-color: @color;
 							color: @color-inverse;
 						}
 					}
@@ -748,22 +833,22 @@ section.video blockquote i.fa-quote-left {
 	color: @color-primary;
 }
 
-// Panel
-.panel-group {
-	.panel-heading a {
+// Accordion
+.accordion {
+	.card-header a {
 		color: @color-primary;
 	}
 }
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
-		.panel-group {
-			&.panel-group-@{name} {
-				.panel-heading {
+		.accordion {
+			&.accordion-@{name} {
+				.card-header {
 					background-color: @color !important;
 					a {
 						color: @color-inverse;
@@ -777,13 +862,13 @@ html {
 // Dividers
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.divider {
 			&.divider-@{name} {
-				.fa, .icons {
+				.fa, .fas, .far, .fal, .fab, .icons {
 					color: @color;
 				}
 				&.divider-small {
@@ -798,14 +883,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.divider {
 			&.divider-style-2 {
 				&.divider-@{name} {
-					.fa, .icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						background: @color;
 						color: @color-inverse;
 					}
@@ -817,14 +902,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.divider {
 			&.divider-style-3 {
 				&.divider-@{name} {
-					.fa, .icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						border-color: @color;
 					}
 				}
@@ -841,6 +926,7 @@ html {
 		color: @color-primary-inverse;
 		&:before {
 			border-right-color: @color-primary;
+			border-left-color: transparent;
 		}
 	}
 
@@ -848,9 +934,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		#header {
 
@@ -869,12 +955,35 @@ html {
 html[dir="rtl"] {
 	#header {
 
-		.tip.skin {
+		.tip {
 			&:before {
 				border-left-color: @color-primary;
 			}
+
+			&.skin {
+				&:before {
+					border-left-color: @color-primary;
+				}
+			}
 		}
 
+	}
+
+	.for(@colors-list); .-each(@value) {
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
+
+		#header {
+
+			.tip-@{name} {
+				&:before {
+					border-left-color: @color !important;
+					border-right-color: transparent !important;
+				}
+			}
+
+		}
 	}
 }
 
@@ -896,6 +1005,17 @@ html[dir="rtl"] {
 			nav {
 				> ul {
 					> li {
+						> a {
+							color: @color-primary;
+							&.dropdown-toggle {
+								&:after {
+									border-color: @color-primary transparent transparent transparent;
+								}
+							}
+							&.active {
+								background: @color-primary;
+							}
+						}
 						&.open, &:hover {
 							> a {
 								background: @color-primary;
@@ -914,6 +1034,39 @@ html[dir="rtl"] {
 									}
 								}
 							}
+
+							&.open, &:hover {
+								> a {
+									&:before {
+										border-bottom-color: @color-primary;
+									}
+								}
+							}
+						}
+						.dropdown-menu {
+							border-top-color: @color-primary;
+							li {
+								&.dropdown-submenu {
+									&.dropdown-reverse {
+										> a {
+											&:after {
+												border-color: transparent @color-primary transparent transparent !important;
+											}
+										}
+									}
+								}
+							}
+						}
+
+						&.dropdown-mega-signin {
+							.dropdown-menu {
+								border-top-color: @color-primary;
+								li {
+									a {
+										color: @color-primary;
+									}
+								}
+							}
 						}
 					}
 				}
@@ -926,16 +1079,20 @@ html[dir="rtl"] {
 			&.header-nav-stripe {
 				nav {
 					> ul {
-						> li:not(:hover) {
-							&.active {
-								> a {
+						> li {
+							> a {
+								&.active {
 									color: @color-primary;
+									&.dropdown-toggle:after {
+										border-color: @color-primary transparent transparent transparent;
+									}
 								}
 							}
-						}
-						> li:hover {
-							> a {
-								background-color: @color-primary;
+							&:hover, 
+							&.open {
+								> a {
+									background-color: @color-primary;
+								}
 							}
 						}
 					}
@@ -947,11 +1104,29 @@ html[dir="rtl"] {
 				nav {
 					> ul {
 						li {
-							&.active, &:hover {
+							> a {
+								&.active {
+									color: @color-primary;
+									&:before {
+										background: @color-primary;
+									}
+									&.dropdown-toggle {
+										&:after {
+											border-color: @color-primary transparent transparent transparent;
+										}
+									}
+								}
+							}
+							&:hover {
 								> a {
 									color: @color-primary;
 									&:before {
 										background: @color-primary;
+									}
+									&.dropdown-toggle {
+										&:after {
+											border-color: @color-primary transparent transparent transparent;
+										}
 									}
 								}
 							}
@@ -965,9 +1140,23 @@ html[dir="rtl"] {
 				nav {
 					> ul {
 						li {
-							&.active, &:hover {
+							> a {
+								&.active {
+									color: @color-primary;
+									&.dropdown-toggle:after {
+										border-color: @color-primary transparent transparent transparent;
+									}
+								}
+							}
+							&:hover {
 								> a {
 									color: @color-primary;
+
+									&.dropdown-toggle {
+										&:after {
+											border-color: @color-primary transparent transparent transparent;
+										}
+									}
 								}
 							}
 						}
@@ -977,15 +1166,72 @@ html[dir="rtl"] {
 		}
 
 	}
+
+	html {
+		&.side-header {
+			#header {
+				.header-nav-main {
+					nav > ul > {
+						li.dropdown {
+							&.open > .dropdown-menu,
+							&:hover > .dropdown-menu {
+								border-left-color: @color-primary;
+							}
+							> a.dropdown-toggle {
+								&:after {
+									border-color: transparent transparent transparent @color-primary;
+								}
+							}	
+							&.active, &:hover {
+								> a.dropdown-toggle {
+									&:after {
+										border-color: transparent transparent transparent @color-primary-inverse;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+		&.side-header-right {
+			#header {
+				.header-nav-main {
+					nav > ul > {
+						li.dropdown {
+							&.open > .dropdown-menu,
+							&:hover > .dropdown-menu {
+								border-right-color: @color-primary;
+							}
+							> a.dropdown-toggle {
+								&:after {
+									border-color: transparent @color-primary transparent transparent;
+								}
+							}
+							&.active, &:hover {
+								> a.dropdown-toggle {
+									&:after {
+										border-color: transparent @color-primary-inverse transparent transparent;
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
 }
 
 // Header Nav Main Colors
 @media (min-width: 992px) {
+
 	html {
 		.for(@colors-list); .-each(@value) {
-		    @name:  extract(@value, 1);
-		    @color:  extract(@value, 2);
-		    @color-inverse:  extract(@value, 3);
+			@name:  extract(@value, 1);
+			@color:  extract(@value, 2);
+			@color-inverse:  extract(@value, 3);
 
 			#header {
 
@@ -994,14 +1240,45 @@ html[dir="rtl"] {
 					nav {
 						> ul {
 							> li {
+								> a {
+									&.active {
+										&.dropdown-toggle {
+											&:after {
+												border-color: @color transparent transparent transparent;
+											}
+										}
+									}
+								}
+								&:hover {
+									> a {
+										&.dropdown-toggle {
+											&:after {
+												border-color: @color transparent transparent transparent;
+											}
+										}
+									}
+								}
 								&.dropdown-full-color.dropdown-@{name} {
 									> a {
-										color: @color;
+										&.active {
+											background: @color;
+											color: @color-inverse;
+										}
 									}
-									&.active, &:hover {
+									&:hover {
 										> a {
 											background: @color;
 											color: @color-inverse;
+										}
+									}
+									a {
+										color: @color;
+										&:focus, &:hover {
+											background: @color;
+											color: @color-inverse;
+										}
+										&:after {
+											border-color: @color transparent transparent transparent;
 										}
 									}
 									.dropdown-menu {
@@ -1026,6 +1303,14 @@ html[dir="rtl"] {
 											}
 										}
 									}
+
+									&.open, &:hover {
+										> a {
+											&:before {
+												border-bottom-color: @color;
+											}
+										}
+									}
 								}
 								&.dropdown-full-color.dropdown-mega.dropdown-@{name} {
 									.dropdown-mega-sub-title {
@@ -1042,6 +1327,35 @@ html[dir="rtl"] {
 			
 		}
 	}
+
+	html[dir="rtl"] {
+		#header {
+
+			// Header Nav Main
+			.header-nav-main {
+				nav {
+					> ul {
+						> li {
+							&.dropdown {
+								.dropdown-menu {
+									li {
+										&.dropdown-submenu {
+											> a {
+												&:after {
+													border-color: transparent @color-primary transparent transparent;
+												}
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+
+		}
+	}
 }
 
 // Header Nav Main Mobile
@@ -1055,15 +1369,15 @@ html[dir="rtl"] {
 				> ul {
 					> li {
 						> a {
-							&, &:focus, &:hover {
+							color: @color-primary;
+							&:active {
 								color: @color-primary;
 							}
-						}
-					}
-					> li.active {
-						> a {
-							&, &:focus, &:hover {
-								background-color: @color-primary;
+							&.active {
+								background: @color-primary;
+								&:focus, &:hover {
+									background: @color-primary;
+								}
 							}
 						}
 					}
@@ -1079,9 +1393,9 @@ html[dir="rtl"] {
 @media (max-width: 991px) {
 	html {
 		.for(@colors-list); .-each(@value) {
-		    @name:  extract(@value, 1);
-		    @color:  extract(@value, 2);
-		    @color-inverse:  extract(@value, 3);
+			@name:  extract(@value, 1);
+			@color:  extract(@value, 2);
+			@color-inverse:  extract(@value, 3);
 
 			#header {
 
@@ -1093,9 +1407,7 @@ html[dir="rtl"] {
 								&.dropdown-full-color.dropdown-@{name} {
 									> a {
 										color: @color;
-									}
-									&.active {
-										> a {
+										&.active {
 											background: @color;
 											color: @color-inverse;
 										}
@@ -1115,9 +1427,9 @@ html[dir="rtl"] {
 // Header Top
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		#header {
 
@@ -1159,9 +1471,9 @@ html {
 @media (min-width: 992px) {
 	html {
 		.for(@colors-list); .-each(@value) {
-		    @name:  extract(@value, 1);
-		    @color:  extract(@value, 2);
-		    @color-inverse:  extract(@value, 3);
+			@name:  extract(@value, 1);
+			@color:  extract(@value, 2);
+			@color-inverse:  extract(@value, 3);
 
 			#header {
 
@@ -1179,18 +1491,118 @@ html {
 @media (min-width: 992px) {
 	#header {
 
-		.header-nav-main-light {
+		.header-nav-main.header-nav-main-light {
 			nav {
 				> ul {
 					> li {
-						&.dropdown:hover {
+						&.open, &:hover {
 							> a {
 								color: @color-primary;
+
+								&.dropdown-toggle {
+									&:after {
+										border-color: @color-primary transparent transparent transparent;
+									}
+								}
 							}
 						}
-						&.active {
-							> a {
+
+						> a {
+							&.active {
 								color: @color-primary;
+
+								&.dropdown-toggle {
+									&:after {
+										border-color: @color-primary transparent transparent transparent;
+									}
+								}
+							}	
+						}
+						
+					}
+				}
+			}
+		}
+
+	}
+}
+
+// Transparent Headers
+@media (min-width: 992px) {
+
+	// Transparent
+	html {
+
+		&:not(.sticky-header-active) {
+			#header {
+				&.header-transparent:not(.header-transparent-not-fixed) {
+					.header-nav-main {
+						nav {
+							> ul {
+								> li {
+									> a {
+										&.active {
+											color: @color-primary;
+											&.dropdown-toggle:after {
+												border-color: @color-primary transparent transparent transparent;
+											}
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	// Semi Transparent
+	html {
+
+		#header {
+			&.header-semi-transparent {
+				.header-nav-main {
+					nav {
+						> ul {
+							> li {
+								> a {
+									&.active {
+										color: @color-primary;
+										&.dropdown-toggle:after {
+											border-color: @color-primary transparent transparent transparent;
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+
+	}
+
+	// Semi Transparent Light
+	html {
+
+		&:not(.sticky-header-active) {
+			#header {
+				&.header-semi-transparent-light {
+					.header-nav-main {
+						nav {
+							> ul {
+								> li {
+									> a {
+										&.active {
+											color: @color-primary;
+											&.dropdown-toggle:after {
+												border-color: @color-primary transparent transparent transparent;
+											}
+										}
+									}
+								}
 							}
 						}
 					}
@@ -1214,9 +1626,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.testimonial-@{name} {
 			blockquote {
@@ -1233,7 +1645,7 @@ html {
 
 // Circular Bar
 .circular-bar.only-icon {
-	.fa, .icons {
+	.fa, .fas, .far, .fal, .fab, .icons {
 		color: @color-primary;
 	}
 }
@@ -1241,13 +1653,13 @@ html {
 // Counters
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.counters {
 			.counter-@{name} {
-				.fa, .icons, strong {
+				.fa, .fas, .far, .fal, .fab, .icons, strong {
 					color: @color;
 				}
 			}
@@ -1279,9 +1691,9 @@ html {
 // Featured Box - Colors
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.featured-box-@{name} {
 			.icon-featured {
@@ -1299,9 +1711,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.featured-boxes-style-3 {
 			.featured-box.featured-box-@{name} {
 				.icon-featured {
@@ -1315,9 +1727,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.featured-boxes-style-4 {
 			.featured-box.featured-box-@{name} {
 				.icon-featured {
@@ -1331,9 +1743,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.featured-boxes-style-5 {
 			.featured-box.featured-box-@{name} {
 				.icon-featured {
@@ -1346,9 +1758,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.featured-boxes-style-6 {
 			.featured-box.featured-box-@{name} {
 				.icon-featured {
@@ -1361,9 +1773,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.featured-boxes-style-8 {
 			.featured-box.featured-box-@{name} {
 				.icon-featured {
@@ -1377,9 +1789,9 @@ html {
 // Featured Box - Effects
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.featured-box-effect-2.featured-box-@{name} {
 			.icon-featured:after {
@@ -1391,9 +1803,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.featured-box-effect-3.featured-box-@{name} {
 			.icon-featured:after {
@@ -1417,9 +1829,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			.feature-box-icon {
@@ -1432,7 +1844,7 @@ html {
 .feature-box {
 	&.feature-box-style-2 {
 		.feature-box-icon {
-			i.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: @color-primary;
 			}
 		}
@@ -1441,14 +1853,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			&.feature-box-style-2 {
 				.feature-box-icon {
-					i.fa, .icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						color: @color;
 					}
 				}
@@ -1461,7 +1873,7 @@ html {
 	&.feature-box-style-3 {
 		.feature-box-icon {
 			border-color: @color-primary;
-			i.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: @color-primary;
 			}
 		}
@@ -1470,15 +1882,15 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			&.feature-box-style-3 {
 				.feature-box-icon {
 					border-color: @color;
-					i.fa, .icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						color: @color;
 					}
 				}
@@ -1490,7 +1902,7 @@ html {
 .feature-box {
 	&.feature-box-style-4 {
 		.feature-box-icon {
-			i.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: @color-primary;
 			}
 		}
@@ -1499,14 +1911,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			&.feature-box-style-4 {
 				.feature-box-icon {
-					i.fa, .icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						color: @color;
 					}
 				}
@@ -1518,7 +1930,7 @@ html {
 .feature-box {
 	&.feature-box-style-5 {
 		.feature-box-icon {
-			i.fa, i.icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				color: @color-primary;
 			}
 		}
@@ -1527,14 +1939,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			&.feature-box-style-5 {
 				.feature-box-icon {
-					i.fa, i.icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						color: @color;
 					}
 				}
@@ -1545,14 +1957,14 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.feature-box-@{name} {
 			&.feature-box-style-6 {
 				.feature-box-icon {
-					i.fa, i.icons {
+					.fa, .fas, .far, .fal, .fab, .icons {
 						color: @color;
 					}
 				}
@@ -1565,13 +1977,11 @@ html {
 html {
 	.for(@colors-scale-list); .-each(@value) {
 		@index:  extract(@value, 1);
-	    @color:  extract(@value, 2);
+		@color:  extract(@value, 2);
 
 		.featured-boxes-full-scale {
-			> [class*="col-"]:nth-child(@{index}) {
-				.featured-box-full-primary {
-					background-color: @color;
-				}
+			> .featured-box-full-primary:nth-child(@{index}) {
+				background-color: @color;
 			}
 		}
 	}
@@ -1579,9 +1989,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.featured-boxes-full {
 			.featured-box-full-@{name} {
@@ -1597,7 +2007,7 @@ html {
 	.most-popular {
 		border-color: @color-primary;
 		h3 {
-			.gradient(@color-primary, darken(@color-primary, 15%), @gradient) !important;
+			background-color: @color-primary;
 		}
 	}
 
@@ -1616,9 +2026,9 @@ html {
 // Call to Action
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 		.call-to-action {
 			&.featured {
 				&.featured-@{name} {
@@ -1628,7 +2038,7 @@ html {
 			&.call-to-action-@{name} {
 				background: @color;
 			}
-			&.with-full-borders {
+			&.with-full-borders-@{name} {
 				border-color: @color;
 			}
 			&.call-to-action-@{name} {
@@ -1675,9 +2085,9 @@ ul.history li .featured-box .box-content {
 // Home Intro
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		.home-intro-@{name} {
 			background: @color;
@@ -1690,9 +2100,46 @@ html {
 	color: lighten(@color-primary, 10%);
 }
 
+// Hover Effects
+.hover-effect-1 {
+	&:hover {
+		a {
+			color: @color-primary !important;
+		}
+	}
+}
+
+// Slider
+html {
+	.for(@colors-list); .-each(@value) {
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
+
+		.slider-container {
+			.tp-caption-overlay-@{name} {
+				background: @color;
+			}
+			.tp-caption-overlay-opacity-@{name} {
+				background: fade(@color, 40%);
+			}
+		}
+		
+	}
+}
+
+// Arrows
+.tparrows {
+	&.tparrows-carousel {
+		&.tp-leftarrow, &.tp-rightarrow {
+			.buttonBackground(@color-primary);
+		}
+	}
+}
+
 // Shop
 .shop {
-	ul.products li.product .onsale {
+	.products .product .onsale {
 		background-color: @color-primary;
 		border-bottom-color: darken(@color-primary, 8%);
 	}
@@ -1743,9 +2190,9 @@ html {
 
 html {
 	.for(@colors-list); .-each(@value) {
-	    @name:  extract(@value, 1);
-	    @color:  extract(@value, 2);
-	    @color-inverse:  extract(@value, 3);
+		@name:  extract(@value, 1);
+		@color:  extract(@value, 2);
+		@color-inverse:  extract(@value, 3);
 
 		#footer {
 			&.color-@{name} {
@@ -1785,32 +2232,43 @@ html.boxed .body {
 & when (@border-radius = 0) {
 
 	// Bootstrap
-	.img-rounded,
+	.rounded,
 	.img-thumbnail,
 	.img-thumbnail img,
 	code,
 	pre,
 	.form-control,
-	.input-sm,
-	.form-group-sm .form-control,
-	.input-lg,
-	.form-group-lg .form-control,
+	.form-control-sm,
+	.form-control-sm .form-control,
+	.form-control-lg,
+	.form-control-lg .form-control,
+	.form-control-sm, .input-group-sm > .form-control,
+	.input-group-sm > .input-group-addon,
+	.input-group-sm > .input-group-btn > .btn,
+	.form-control-lg, .input-group-lg > .form-control,
+	.input-group-lg > .input-group-addon,
+	.input-group-lg > .input-group-btn > .btn,
+	.invalid-tooltip,
 	.btn,
+	.btn-group-4 > .btn,
+	.btn-sm,
+	.btn-group-2 > .btn,
+	.btn-xs,
+	.btn-group-1 > .btn,
+	.btn-lg,
 	.btn-group-lg > .btn,
 	.btn-sm,
 	.btn-group-sm > .btn,
-	.btn-xs,
-	.btn-group-xs > .btn,
 	.dropdown-menu,
-	.input-group-lg > .form-control,
-	.input-group-lg > .input-group-addon,
-	.input-group-lg > .input-group-btn > .btn,
-	.input-group-sm > .form-control,
-	.input-group-sm > .input-group-addon,
-	.input-group-sm > .input-group-btn > .btn,
+	.input-group-4 > .form-control,
+	.input-group-4 > .input-group-addon,
+	.input-group-4 > .input-group-btn > .btn,
+	.input-group-2 > .form-control,
+	.input-group-2 > .input-group-addon,
+	.input-group-2 > .input-group-btn > .btn,
 	.input-group-addon,
-	.input-group-addon.input-sm,
-	.input-group-addon.input-lg,
+	.input-group-addon.form-control-sm,
+	.input-group-addon.form-control-lg,
 	.nav-tabs > li > a,
 	.nav-tabs.nav-justified > li > a,
 	.nav-pills > li > a,
@@ -1829,8 +2287,8 @@ html.boxed .body {
 	.thumbnail,
 	.alert,
 	.progress,
-	.panel,
-	.panel-group .panel,
+	.card,
+	.accordion .card,
 	.well,
 	.well-lg,
 	.well-sm,
@@ -1846,18 +2304,7 @@ html.boxed .body {
 	.pagination > li:last-child > a,
 	.pagination > li:last-child > span,
 	.pagination-lg > li:last-child > a,
-	.pagination-lg > li:last-child > span {
-		border-radius: 0;
-	}
-
-	@media (min-width: 768px) {
-		.nav-tabs.nav-justified > li > a,
-		.nav-tabs-justified > li > a,
-		.navbar {
-			border-radius: 0;
-		}
-	}
-
+	.pagination-lg > li:last-child > span,
 	#header .header-search .form-control,
 	#header .header-nav-main nav > ul > li > a,
 	#header .header-nav-main nav > ul > li.dropdown .dropdown-menu,
@@ -1868,6 +2315,9 @@ html.boxed .body {
 	#header.header-semi-transparent .header-nav-main,
 	#header.header-semi-transparent-light .header-nav-main,
 	#header .header-nav-main nav > ul > li.dropdown-mega.dropdown-mega-signin .dropdown-menu,
+	#header .header-nav-main nav > ul > li.dropdown.open > a,
+	#header .header-nav-main nav > ul > li.dropdown:hover > a,
+	#header .header-nav-top .dropdown-menu,
 	.slider-container .tparrows,
 	.nivo-slider .theme-default .nivoSlider,
 	.nivo-slider .theme-default .nivoSlider img,
@@ -1880,7 +2330,7 @@ html.boxed .body {
 	select,
 	.captcha-refresh,
 	.featured-icon,
-	.panel-group .panel-heading,
+	.accordion .card-header,
 	.tabs,
 	.nav-tabs li a,
 	.tab-content,
@@ -1895,22 +2345,38 @@ html.boxed .body {
 	.nav-tabs.nav-justified li:first-child a,
 	.nav-tabs.nav-justified li:first-child a:hover,
 	.nav-tabs.nav-justified li:last-child a,
+	.nav-pills .nav-link,
 	.nav-tabs.nav-justified li:last-child a:hover,
 	.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:first-child a,
 	.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:last-child a,
 	.tabs-navigation,
 	.tabs-navigation .nav-tabs > li:first-child a,
 	.tabs-navigation .nav-tabs > li:last-child a,
+	.nav-pills .nav-link,
+	.navbar-toggler,
+	.card,
+	.card-header:first-child,
+	.card-footer:last-child,
+	.card-img,
+	.badge,
+	.badge-pill,
+	.jumbotron,
+	.alert,
+	.progress,
+	.modal-content,
+	.tooltip-inner,
+	.popover,
+	.rounded,
 	.toggle > label,
 	.toggle.toggle-simple .toggle > label,
 	.toggle.toggle-simple .toggle > label:after,
-	.owl-carousel .owl-nav [class*="owl-"],
-	.owl-carousel.rounded-nav .owl-nav [class*="owl-"],
-	.owl-carousel.rounded-nav .owl-nav [class*="owl-"]:hover,
-	.owl-carousel.full-width .owl-nav .owl-prev,
-	.owl-carousel.big-nav .owl-nav .owl-prev,
-	.owl-carousel.full-width .owl-nav .owl-next,
-	.owl-carousel.big-nav .owl-nav .owl-next,
+	.owl-carousel .owl-nav button[class*="owl-"],
+	.owl-carousel.rounded-nav .owl-nav button[class*="owl-"],
+	.owl-carousel.rounded-nav .owl-nav button[class*="owl-"]:hover,
+	.owl-carousel.full-width .owl-nav button.owl-prev,
+	.owl-carousel.big-nav .owl-nav button.owl-prev,
+	.owl-carousel.full-width .owl-nav button.owl-next,
+	.owl-carousel.big-nav .owl-nav button.owl-next,
 	.embed-responsive.embed-responsive-borders,
 	.pricing-table h3,
 	.pricing-table .plan,
@@ -1956,15 +2422,6 @@ html.boxed .body {
 		border-radius: 0;
 	}
 
-	@media (max-width: 479px) {
-		.tabs .nav.nav-tabs.nav-justified li:first-child a,
-		.tabs .nav.nav-tabs.nav-justified li:first-child a:hover,
-		.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:last-child a,
-		.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:last-child a:hover {
-			border-radius: 0;
-		}
-	}
-
 	@media (min-width: 992px) {
 		#header nav.mega-menu ul.nav-main li.mega-menu-item ul.sub-menu a,
 		#header nav.mega-menu ul.nav-main li.mega-menu-fullwidth ul.dropdown-menu,
@@ -1974,4 +2431,22 @@ html.boxed .body {
 			border-radius: 0;
 		}
 	}
+
+	@media (min-width: 768px) {
+		.nav-tabs.nav-justified > li > a,
+		.nav-tabs-justified > li > a,
+		.navbar {
+			border-radius: 0;
+		}
+	}
+
+	@media (max-width: 575px) {
+		.tabs .nav.nav-tabs.nav-justified li:first-child a,
+		.tabs .nav.nav-tabs.nav-justified li:first-child a:hover,
+		.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:last-child a,
+		.tabs.tabs-bottom .nav.nav-tabs.nav-justified li:last-child a:hover {
+			border-radius: 0;
+		}
+	}
+
 }

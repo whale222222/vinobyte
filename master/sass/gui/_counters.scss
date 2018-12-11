@@ -3,7 +3,7 @@
 	.counter {
 		text-align: center;
 	}
-	.fa, .icons {
+	.fa, .fas, .far, .fal, .fab, .icons {
 		display: block;
 		font-size: 35px;
 		line-height: 35px;
@@ -23,7 +23,7 @@
 	}
 
 	.counter-side-icon {
-		.fa, .icons, strong {
+		.fa, .fas, .far, .fal, .fab, .icons, strong {
 			display: inline-block;
 		}
 	}
@@ -47,7 +47,7 @@
 	}
 
 	&.counters-sm {
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			font-size: 25px;
 			line-height: 25px;
 		}
@@ -62,7 +62,7 @@
 	}
 
 	&.counters-lg {
-		.fa {
+		.fa, .fas, .far, .fal, .fab {
 			font-size: 45px;
 			line-height: 45px;
 		}
@@ -79,7 +79,7 @@
 	&.counters-text-light {
 		.counter {
 			color: #FFF !important;
-			.fa, .icons, strong, label {
+			.fa, .fas, .far, .fal, .fab, .icons, strong, label {
 				color: #FFF !important;
 			}
 		}
@@ -88,7 +88,7 @@
 	&.counters-text-dark {
 		.counter {
 			color: $color-dark-4 !important;
-			.fa, .icons, strong, label {
+			.fa, .fas, .far, .fal, .fab, .icons, strong, label {
 				color: $color-dark-4 !important;
 			}
 		}

@@ -2,7 +2,7 @@
 /*
 Name: 			Contact Form
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 */
 
 session_cache_limiter('nocache');
@@ -10,99 +10,78 @@ header('Expires: ' . gmdate('r', 0));
 
 header('Content-type: application/json');
 
-// Step 1 - Enter your email address below.
-$to = 'you@domain.com';
+require_once('php-mailer/PHPMailerAutoload.php');
 
-// Step 2 - Enable if the server requires SMTP authentication. (true/false)
-$enablePHPMailer = false;
+// Step 1 - Enter your email address below.
+$email = 'you@domain.com';
+
+// If the e-mail is not working, change the debug option to 2 | $debug = 2;
+$debug = 0;
 
 $subject = $_POST['subject'];
 
-if(isset($_POST['email'])) {
+$fields = array(
+	0 => array(
+		'text' => 'Name',
+		'val' => $_POST['name']
+	),
+	1 => array(
+		'text' => 'Email address',
+		'val' => $_POST['email']
+	),
+	2 => array(
+		'text' => 'Message',
+		'val' => $_POST['message']
+	)
+);
 
-	$name = $_POST['name'];
-	$email = $_POST['email'];
+$message = '';
 
-	$fields = array(
-		0 => array(
-			'text' => 'Name',
-			'val' => $_POST['name']
-		),
-		1 => array(
-			'text' => 'Email address',
-			'val' => $_POST['email']
-		),
-		2 => array(
-			'text' => 'Message',
-			'val' => $_POST['message']
-		)
-	);
-
-	$message = "";
-
-	foreach($fields as $field) {
-		$message .= $field['text'].": " . htmlspecialchars($field['val'], ENT_QUOTES) . "<br>\n";
-	}
-
-	// Simple Mail
-	if(!$enablePHPMailer) {
-
-		$headers = '';
-		$headers .= 'From: ' . $name . ' <' . $email . '>' . "\r\n";
-		$headers .= "Reply-To: " .  $email . "\r\n";
-		$headers .= "MIME-Version: 1.0\r\n";
-		$headers .= "Content-Type: text/html; charset=UTF-8\r\n";
-
-		if (mail($to, $subject, $message, $headers)){
-			$arrResult = array ('response'=>'success');
-		} else{
-			$arrResult = array ('response'=>'error');
-		}
-
-	// PHP Mailer Library - Docs: https://github.com/PHPMailer/PHPMailer
-	} else {
-
-		include("php-mailer/PHPMailerAutoload.php");
-
-		$mail = new PHPMailer;
-
-		$mail->IsSMTP();                                      // Set mailer to use SMTP
-		$mail->SMTPDebug = 0;                                 // Debug Mode
-
-		// Step 3 - If you don't receive the email, try to configure the parameters below:
-
-		//$mail->Host = 'mail.yourserver.com';				  // Specify main and backup server
-		//$mail->SMTPAuth = true;                             // Enable SMTP authentication
-		//$mail->Username = 'username';             		  // SMTP username
-		//$mail->Password = 'secret';                         // SMTP password
-		//$mail->SMTPSecure = 'tls';                          // Enable encryption, 'ssl' also accepted
-
-		$mail->From = $email;
-		$mail->FromName = $_POST['name'];
-		$mail->AddAddress($to);								  // Add a recipient
-		$mail->AddReplyTo($email, $name);
-
-		$mail->IsHTML(true);                                  // Set email format to HTML
-
-		$mail->CharSet = 'UTF-8';
-
-		$mail->Subject = $subject;
-		$mail->Body    = $message;
-
-		if(!$mail->Send()) {
-		   $arrResult = array ('response'=>'error');
-		}
-
-		$arrResult = array ('response'=>'success');
-
-	}
-
-	echo json_encode($arrResult);
-
-} else {
-
-	$arrResult = array ('response'=>'error');
-	echo json_encode($arrResult);
-
+foreach($fields as $field) {
+	$message .= $field['text'].": " . htmlspecialchars($field['val'], ENT_QUOTES) . "<br>\n";
 }
-?>
+
+$mail = new PHPMailer(true);
+
+try {
+
+	$mail->SMTPDebug = $debug;                                 // Debug Mode
+
+	// Step 2 (Optional) - If you don't receive the email, try to configure the parameters below:
+
+	//$mail->IsSMTP();                                         // Set mailer to use SMTP
+	//$mail->Host = 'mail.yourserver.com';				       // Specify main and backup server
+	//$mail->SMTPAuth = true;                                  // Enable SMTP authentication
+	//$mail->Username = 'user@example.com';                    // SMTP username
+	//$mail->Password = 'secret';                              // SMTP password
+	//$mail->SMTPSecure = 'tls';                               // Enable encryption, 'ssl' also accepted
+	//$mail->Port = 587;   								       // TCP port to connect to
+
+	$mail->AddAddress($email);	 						       // Add another recipient
+
+	//$mail->AddAddress('person2@domain.com', 'Person 2');     // Add a secondary recipient
+	//$mail->AddCC('person3@domain.com', 'Person 3');          // Add a "Cc" address. 
+	//$mail->AddBCC('person4@domain.com', 'Person 4');         // Add a "Bcc" address. 
+
+	$mail->SetFrom($email, $_POST['name']);
+	$mail->AddReplyTo($_POST['email'], $_POST['name']);
+
+	$mail->IsHTML(true);                                  // Set email format to HTML
+
+	$mail->CharSet = 'UTF-8';
+
+	$mail->Subject = $subject;
+	$mail->Body    = $message;
+
+	$mail->Send();
+	$arrResult = array ('response'=>'success');
+
+} catch (phpmailerException $e) {
+	$arrResult = array ('response'=>'error','errorMessage'=>$e->errorMessage());
+} catch (Exception $e) {
+	$arrResult = array ('response'=>'error','errorMessage'=>$e->getMessage());
+}
+
+if ($debug == 0) {
+	echo json_encode($arrResult);
+}

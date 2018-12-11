@@ -1,7 +1,7 @@
 /*
 Name: 			theme.css
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		@@version
+Theme Version:	@@version
 */
 
 // COMMON IMPORTS
@@ -12,9 +12,6 @@ Version: 		@@version
 @import "base/header";
 @import "base/page-header";
 
-// HELPERS
-@import "config/helpers";
-
 // GUI
 @import "gui/parallax";
 @import "gui/sections";
@@ -24,6 +21,9 @@ Version: 		@@version
 // PARTIALS
 @import "partials/home";
 @import "partials/page-not-found";
+
+// HELPERS
+@import "base/helpers";
 
 // FOOTER
 @import "base/footer";

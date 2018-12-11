@@ -10,20 +10,17 @@
 	@include if-rtl {
 		padding-right: 2px;
 	}
-	font-size: 0;
 	border-bottom-color: #EEE;
 
 	li {
-		display: inline-block;
-		float: none;
 
 		&:last-child {
-			a {
+			.nav-link {
 				margin-#{$right}: 0;
 			}
 		}
 
-		a {
+		.nav-link {
 			border-radius: corner-values(5px 5px 0 0);
 			font-size: 14px;
 			margin-#{$right}: 1px;
@@ -53,9 +50,9 @@
 		}
 
 		&.active {
-			a,
-			a:hover,
-			a:focus {
+			.nav-link,
+			.nav-link:hover,
+			.nav-link:focus {
 				background: #FFF;
 				border-#{$left}-color: #EEE;
 				border-#{$right}-color: #EEE;
@@ -100,12 +97,12 @@
 			margin-top: -1px;
 
 			&:last-child {
-				a {
+				.nav-link {
 					margin-#{$right}: 0;
 				}
 			}
 
-			a {
+			.nav-link {
 				border-radius: corner-values(0 0 5px 5px);
 				font-size: 14px;
 				margin-#{$right}: 1px;
@@ -125,9 +122,9 @@
 			}
 
 			&.active {
-				a,
-				a:hover,
-				a:focus {
+				.nav-link,
+				.nav-link:hover,
+				.nav-link:focus {
 					border-bottom: 3px solid #CCC;
 					border-top-color: transparent;
 				}
@@ -155,11 +152,12 @@
 		float: none;
 		padding: 0;
 		vertical-align: top;
+		width: 25%;
 
 		& > li {
 			display: block;
 
-			a {
+			.nav-link {
 				border-radius: corner-values(0);
 				display:block;
 				padding-top: 10px;
@@ -173,9 +171,9 @@
 			}
 
 			&.active {
-				a,
-				a:hover,
-				&:focus {
+				.nav-link,
+				.nav-link:hover,
+				.nav-link:focus {
 					border-top: none;
 				}
 			}
@@ -196,19 +194,19 @@
 			margin-#{$right}: -1px;
 
 			&:first-child {
-				a {
+				.nav-link {
 					border-radius: corner-values(5px 0 0 0);
 				}
 			}
 
 			&:last-child {
-				a {
+				.nav-link {
 					border-radius: corner-values(0 0 0 5px);
 					border-bottom: 1px solid #eee;
 				}
 			}
 
-			a {
+			.nav-link {
 				border: {
 					#{$right}: 1px solid #EEE;
 					#{$left}: 3px solid #EEE;
@@ -222,9 +220,9 @@
 			}
 
 			&.active {
-				a,
-				a:hover,
-				a:focus {
+				.nav-link,
+				.nav-link:hover,
+				.nav-link:focus {
 					border-#{$left}: 3px solid #CCC;
 					border-#{$right}-color: #FFF;
 				}
@@ -246,19 +244,19 @@
 			margin-#{$left}: -1px;
 
 			&:first-child {
-				a {
+				.nav-link {
 					border-radius: corner-values(0 5px 0 0);
 				}
 			}
 
 			&:last-child {
-				a {
+				.nav-link {
 					border-radius: corner-values(0 0 5px 0);
 					border-bottom: 1px solid #eee;
 				}
 			}
 
-			a {
+			.nav-link {
 				border: {
 					#{$right}: 3px solid #EEE;
 					#{$left}: 1px solid #EEE;
@@ -272,9 +270,9 @@
 			}
 
 			&.active {
-				a,
-				a:hover,
-				a:focus {
+				.nav-link,
+				.nav-link:hover,
+				.nav-link:focus {
 					border-#{$right}: 3px solid #CCC;
 					border-#{$left}: 1px solid #FFF;
 				}
@@ -292,20 +290,20 @@
 		margin-bottom: 0;
 
 		&:first-child {
-			a,
-			a:hover {
+			.nav-link,
+			.nav-link:hover {
 				border-radius: corner-values(5px 0 0 0);
 			}
 		}
 
 		&:last-child {
-			a,
-			a:hover {
+			.nav-link,
+			.nav-link:hover {
 				border-radius: corner-values(0 5px 0 0);
 			}
 		}
 
-		a {
+		.nav-link {
 			border-bottom: 1px solid #DDD;
 			border-radius: corner-values(0);
 			margin-#{$right}: 0;
@@ -318,9 +316,9 @@
 		}
 
 		&.active {
-			a,
-			a:hover,
-			a:focus {
+			.nav-link,
+			.nav-link:hover,
+			.nav-link:focus {
 				background: #FFF;
 				border-#{$left}-color: #EEE;
 				border-#{$right}-color: #EEE;
@@ -329,7 +327,7 @@
 		}
 
 		&.active {
-			a {
+			.nav-link {
 				&,
 				&:hover,
 				&:focus {
@@ -351,28 +349,28 @@
 	.nav.nav-tabs.nav-justified {
 		border-top: none;
 		li {
-			a {
+			.nav-link {
 				margin-#{$right}: 0;
 				border-top-color: transparent;
 			}
 
 			&:first-child {
-				a {
+				.nav-link {
 					border-radius: corner-values(0 0 0 5px);
 				}
 			}
 
 			&:last-child {
-				a {
+				.nav-link {
 					margin-#{$right}: 0;
 					border-radius: corner-values(0 0 5px 0);
 				}
 			}
 
 			&.active {
-				a,
-				a:hover,
-				a:focus {
+				.nav-link,
+				.nav-link:hover,
+				.nav-link:focus {
 					border-top-color: transparent;
 				}
 			}
@@ -394,31 +392,37 @@
 	.nav-tabs {
 		> li {
 			margin-bottom: 1px;
-			a {
+			.nav-link {
 				color: #777;
-				padding: 14px;
-				line-height: 120%;
+				padding: 18px;
+				line-height: 100%;
+				position: relative;
 				&:before {
-					font-family: FontAwesome;
+					font-family: 'Font Awesome 5 Free';
+					font-weight: 900;
 					content: "\f054";
 					position: absolute;
 					#{$right}: 15px;
-					top: 15px;
+					top: 50%;
+					transform: translateY(-50%);
+					@include if-rtl() {
+						content: "\f053";
+					}
 				}
-				.fa, .icons {
+				.fa, .fas, .far, .fal, .fab, .icons {
 					margin-#{$right}: 4px;
 				}
 			}
 		}
-		> li:first-child a {
+		 li:first-child .nav-link {
 			border-radius: corner-values(5px 5px 0 0);
 		}
-		> li.active a {
+		 li.active .nav-link {
 			&, &:hover, &:focus {
 				border-right-color: #eee;
 			}
 		}
-		> li:last-child a {
+		 li:last-child .nav-link {
 			border-radius: corner-values(0 0 5px 5px);
 		}
 	}
@@ -434,12 +438,13 @@
 /* Simple */
 .tabs.tabs-simple {
 	.nav-tabs {
+		justify-content: center;
 		border: 0;
 		margin-bottom: 10px;
 		> li {
 			margin-left: 0;
 			margin-bottom: $spacement-lg;
-			a, a:hover, a:focus {
+			.nav-link, .nav-link:hover, .nav-link:focus {
 				padding: 15px 30px;
 				background: none;
 				border: 0;
@@ -451,6 +456,7 @@
 		}
 	}
 	.tab-content {
+		background: transparent;
 		border: 0;
 		padding: 0;
 		margin: 0;
@@ -459,29 +465,24 @@
 }
 
 /* Responsive */
-@media (max-width: 479px) {
+@media (max-width: 575px) {
 
 	.tabs {
 		.nav.nav-tabs.nav-justified {
 			li {
 				display: block;
 				margin-bottom: -5px;
-				a {
+				.nav-link {
 					border-top-width: 3px !important;
 					border-bottom-width: 0 !important;
 				}
-				&:first-child a,
-				&:first-child a:hover {
+				&:first-child .nav-link,
+				&:first-child .nav-link:hover {
 					border-radius: corner-values(5px 5px 0 0);
 				}
-				&:last-child a,
-				&:last-child a:hover {
+				&:last-child .nav-link,
+				&:last-child .nav-link:hover {
 					border-radius: corner-values(0);
-				}
-				&.active {
-					a {
-						
-					}
 				}
 			}
 		}
@@ -490,16 +491,16 @@
 				li {
 					margin-bottom: 0;
 					margin-top: -5px;
-					a {
+					.nav-link {
 						border-bottom-width: 3px !important;
 						border-top-width: 0 !important;
 					}
-					&:first-child a,
-					&:first-child a:hover {
+					&:first-child .nav-link,
+					&:first-child .nav-link:hover {
 						border-radius: corner-values(0);
 					}
-					&:last-child a,
-					&:last-child a:hover {
+					&:last-child .nav-link,
+					&:last-child .nav-link:hover {
 						border-radius: corner-values(0 0 5px 5px);
 					}
 				}

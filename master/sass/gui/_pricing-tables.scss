@@ -1,7 +1,7 @@
 /* Pricing Tables */
 .pricing-table {
-	margin: 10px 0;
-	padding: 0 15px;
+	margin: 0;
+	padding: 0;
 	text-align: center;
 
 	ul {
@@ -37,7 +37,7 @@
 			box-shadow: 0 5px 20px #ddd inset, 0 3px 0 #999 inset;
 			color: $color-font-default;
 			display: block;
-			font: bold 25px / 100px Georgia, Serif;
+			font: bold 25px / 92px Georgia, Serif;
 			height: 100px;
 			margin: 20px auto -65px;
 			width: 100px;
@@ -56,7 +56,6 @@
 			background-color: #666;
 			color: #FFF;
 			padding-top: 30px;
-			text-shadow: 0 1px #555;
 		}
 	}
 	.plan-ribbon-wrapper {
@@ -70,21 +69,21 @@
 
 	.plan-ribbon {
 		@include if-ltr {
-			@include transform(rotate(45deg));
+			transform: rotate(45deg);
 		}
 		@include if-rtl {
-			@include transform(rotate(-45deg));
+			transform: rotate(-45deg);
 		}
-		@include background-image(linear-gradient(top, #bfdc7a, #8ebf45));
+		background-image: linear-gradient(to top, #bfdc7a, #8ebf45);
 		background-color: #bfdc7a;
-		box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.3);
+		box-shadow: 0 0 3px rgba(0, 0, 0, 0.3);
 		color: #333;
 		font-size: 14px;
 		#{$left}: -5px;
 		padding: 7px 0;
 		position: relative;
 		text-align: center;
-		text-shadow: rgba(255, 255, 255, 0.5) 0px 1px 0px;
+		text-shadow: rgba(255, 255, 255, 0.5) 0 1px 0;
 		top: 15px;
 		width: 120px;
 		&:before {
@@ -104,7 +103,7 @@
 			#{$right}: 0;
 		}
 	}
-	[class*="col-md-"] {
+	[class*="col-lg-"] {
 		padding-#{$left}: 0;
 		padding-#{$right}: 0;
 	}
@@ -117,7 +116,6 @@
 		margin-#{$right}: 0;
 		padding: 20px;
 		position: relative;
-		text-shadow: 0 1px rgba(255, 255, 255, 0.8);
 	}
 	.btn {
 		margin-top: 5px;
@@ -191,7 +189,7 @@
 	}
 
 	&.spaced {
-		[class*="col-md-"] {
+		[class*="col-lg-"] {
 			padding-#{$left}: 2px;
 			padding-#{$right}: 2px;
 		}
@@ -216,7 +214,7 @@ html.boxed .pricing-table {
 
 	/* Pricing Tables */
 	.pricing-table {
-		margin-#{$left}: 0px;
+		margin-#{$left}: 0;
 		.plan {
 			margin-#{$right}: 0;
 		}
@@ -227,3 +225,15 @@ html.boxed .pricing-table {
 	}
 
 }
+
+@media (max-width: 575px) {
+
+	/* Pricing Tables */
+	.pricing-table {
+		.most-popular {
+			top: 0;
+		}
+	}
+
+}
+	

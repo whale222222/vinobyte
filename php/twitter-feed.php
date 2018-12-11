@@ -2,7 +2,7 @@
 /*
 Name: 			Twitter Feed
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 */
 
 require_once('tweet-php/TweetPHP.php');
@@ -38,7 +38,7 @@ $TweetPHP = new TweetPHP(array(
 	'format'                => 'html', // Can be 'html' or 'array'
 	'twitter_wrap_open'     => '<ul>',
 	'twitter_wrap_close'    => '</ul>',
-	'tweet_wrap_open'       => '<li><span class="status"><i class="fa fa-twitter"></i> ',
+	'tweet_wrap_open'       => '<li><span class="status"><i class="fab fa-twitter"></i> ',
 	'meta_wrap_open'        => '</span><span class="meta"> ',
 	'meta_wrap_close'       => '</span>',
 	'tweet_wrap_close'      => '</li>',

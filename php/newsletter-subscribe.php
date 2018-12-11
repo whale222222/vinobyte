@@ -2,10 +2,12 @@
 /*
 Name: 			Newsletter Subscribe
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 */
 
-require_once('mailchimp/mailchimp.php');
+include('./mailchimp/mailchimp.php'); 
+
+use \DrewM\MailChimp\MailChimp;
 
 // Step 1 - Set the apiKey - How get your Mailchimp API KEY - http://kb.mailchimp.com/article/where-can-i-find-my-api-key
 $apiKey 	= '11111111111111111111111111111111-us4';
@@ -13,22 +15,26 @@ $apiKey 	= '11111111111111111111111111111111-us4';
 // Step 2 - Set the listId - How to get your Mailchimp LIST ID - http://kb.mailchimp.com/article/how-can-i-find-my-list-id
 $listId 	= '1111111111';
 
-$MailChimp = new \Drewm\MailChimp($apiKey);
-
-$result = $MailChimp->call('lists/subscribe', array(
-                'id'                => $listId,
-                'email'             => array('email'=>$_POST['email']),
-                'merge_vars'        => array('FNAME'=>'', 'LNAME'=>''), // Step 3 (Optional) - Vars - More Information - http://kb.mailchimp.com/merge-tags/using/getting-started-with-merge-tags
-                'double_optin'      => false,
-                'update_existing'   => false,
-                'replace_interests' => false,
-                'send_welcome'      => false,
-            ));
-
-if (in_array('error', $result)) {
-    $arrResult = array ('response'=>'error','message'=>$result['error']);
+if (isset($_POST['email'])) {
+	$email = $_POST['email'];
+} else if (isset($_GET['email'])) {
+	$email = $_GET['email'];
 } else {
-    $arrResult = array ('response'=>'success');
+	$email = '';
+}
+
+$MailChimp = new MailChimp($apiKey);
+
+$result = $MailChimp->post('lists/' . $listId . '/members', array(
+	'email_address' => $email,
+	'merge_fields'  => array('FNAME'=>'', 'LNAME'=>''), // Step 3 (Optional) - Vars - More Information - http://kb.mailchimp.com/merge-tags/using/getting-started-with-merge-tags
+	'status' 		=> 'subscribed'
+));
+
+if ($result['id'] != '') {
+	$arrResult = array('response'=>'success');	
+} else {
+	$arrResult = array('response'=>'error','message'=>$result['detail']);
 }
 
 echo json_encode($arrResult);

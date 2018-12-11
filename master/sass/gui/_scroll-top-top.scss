@@ -1,10 +1,10 @@
 /* Scroll to Top */
 html {
 	.scroll-to-top {
-		@include transition (all 0.3s);
+		transition: opacity 0.3s;
 		background: #404040;
 		border-radius: 7px 7px 0 0;
-		bottom: 0px;
+		bottom: 0;
 		color: #FFF;
 		display: block;
 		height: 9px;
@@ -17,11 +17,9 @@ html {
 		min-width: 49px;
 		z-index: 1040;
 		&:hover {
-			filter: alpha(opacity = 100);
 			opacity: 1;
 		}
 		&.visible {
-			filter: alpha(opacity = 75);
 			opacity: 0.75;
 		}
 		span {
@@ -30,11 +28,18 @@ html {
 		}
 	}
 
+	&.lightbox-opened {
+		.scroll-to-top {
+			#{$right}: 27px;
+		}
+	}
+
 	&.ie11 {
 		.scroll-to-top {
 			#{$right}: 25px;
 		}
 	}
+
 }
 
 /* Responsive */

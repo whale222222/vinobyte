@@ -1,5 +1,5 @@
 /* Thumbnails */
-.img-rounded {
+.rounded {
 	border-radius: 4px;
 }
 
@@ -36,7 +36,7 @@
 			z-index: 1;
 		}
 		&:before {
-			@include transition (all 0.2s);
+			transition: all 0.2s;
 			background: rgba(0, 0, 0, 0.65);
 			border-radius: 4px;
 			content: "";
@@ -52,8 +52,9 @@
 			z-index: 2;
 		}
 		&:after {
-			@include transition (all 0.2s);
-			font-family: FontAwesome;
+			transition: all 0.2s;
+			font-family: 'Font Awesome 5 Free';
+			font-weight: 900;
 			color: #FFF;
 			content: "\f00e";
 			font-size: 30px;
@@ -122,6 +123,43 @@ ul.thumbnail-gallery {
 		}
 		img {
 			border-radius: 0 !important;
+		}
+	}
+}
+
+/* Masonry Loading */
+.masonry-loader {
+	height: auto;
+	overflow: visible;
+	position: relative;
+	&:after {
+		transition: all 0.5s;
+		content: ' ';
+		background: #FFF;
+		bottom: 0;
+		left: 0;
+		position: absolute;
+		right: 0;
+		top: 0;
+		z-index: 1;
+		opacity: 0
+	}
+	.bounce-loader {
+		display: none;
+	}
+	&.masonry-loader-showing {
+		height: 200px;
+		overflow: hidden;
+		&:after {
+			opacity: 1;
+		}
+		.bounce-loader {
+			display: block;
+		}
+	}
+	&.masonry-loader-loaded {
+		&:after {
+			display: none;
 		}
 	}
 }

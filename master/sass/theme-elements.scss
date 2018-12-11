@@ -1,7 +1,7 @@
 /*
 Name: 			theme-elements.css
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		@@version
+Theme Version:	@@version
 */
  
 // COMMON IMPORTS
@@ -10,9 +10,10 @@ Version: 		@@version
 // GUI
 @import "gui/headings";
 @import "gui/typography";
+@import "gui/animations";
 @import "gui/navs";
 @import "gui/buttons";
-@import "gui/labels";
+@import "gui/badges";
 @import "gui/forms";
 @import "gui/tables";
 @import "gui/icons";
@@ -42,6 +43,7 @@ Version: 		@@version
 @import "gui/scroll-top-top";
 @import "gui/flags";
 @import "gui/loading-overlay";
+@import "gui/dropdowns";
 
 // PARTIALS
 @import "partials/portfolio";

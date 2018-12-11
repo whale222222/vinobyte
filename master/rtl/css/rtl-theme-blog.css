@@ -1,7 +1,7 @@
 /*
 Name: 			theme-blog.css
 Written by: 	Okler Themes - (http://www.okler.net)
-Version: 		4.2.0
+Theme Version:	6.2.1
 */
 /* Posts */
 .blog-posts article {
@@ -65,8 +65,6 @@ article.post .post-image .owl-carousel {
 }
 
 article .post-video {
-	-webkit-transition: all 0.2s ease-in-out;
-	-moz-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 	padding: 0;
 	background-color: #FFF;
@@ -94,8 +92,6 @@ article .post-video iframe {
 }
 
 article .post-audio {
-	-webkit-transition: all 0.2s ease-in-out;
-	-moz-transition: all 0.2s ease-in-out;
 	transition: all 0.2s ease-in-out;
 	padding: 0;
 	background-color: #FFF;
@@ -105,7 +101,8 @@ article .post-audio {
 	height: auto;
 	position: relative;
 	margin: 0 0 30px 0;
-	padding-bottom: 25%;
+	padding-bottom: 35%;
+	min-height: 160px;
 }
 
 article .post-audio iframe {
@@ -359,7 +356,7 @@ ul.simple-post-list li {
 ul.simple-post-list li::after {
 	clear: both;
 	content: "";
-	display: table;
+	display: block;
 }
 
 ul.simple-post-list li:last-child {
@@ -376,8 +373,12 @@ ul.simple-post-list .post-meta {
 	font-size: 0.8em;
 }
 
+ul.simple-post-list .post-info {
+	line-height: 20px;
+}
+
 /* Responsive */
-@media (max-width: 479px) {
+@media (max-width: 575px) {
 	ul.comments li {
 		border-right: 8px solid #DDDDDD;
 		clear: both;

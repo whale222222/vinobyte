@@ -7,11 +7,6 @@ section.timeline {
 	padding-bottom: 120px;
 	&:after {
 		background: rgb(80,80,80);
-		background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-		background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
-		background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-		background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-		background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
 		background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
 		content: "";
 		display: block;
@@ -97,10 +92,10 @@ section.timeline {
 			}
 			&:after {
 				@include if-ltr {
-					@include transform(rotate(45deg));
+					transform: rotate(45deg);
 				}
 				@include if-rtl {
-					@include transform(rotate(-45deg));
+					transform: rotate(-45deg);
 				}
 				background: #FFF;
 				border-#{$right}: 1px solid #E5E5E5;
@@ -135,10 +130,10 @@ section.timeline {
 			}
 			&:after {
 				@include if-ltr {
-					@include transform(rotate(45deg));
+					transform: rotate(45deg);
 				}
 				@include if-rtl {
-					@include transform(rotate(-45deg));
+					transform: rotate(-45deg);
 				}
 				background: #FFF;
 				border-#{$left}: 1px solid #E5E5E5;
@@ -163,6 +158,25 @@ section.timeline {
 }
 
 /* Responsive */
+@media (max-width: 1199px) {
+
+	section.timeline {
+		.timeline-box {
+			&.left {
+				&:before {
+					#{$right}: -6.2%;
+				}
+			}
+			&.right {
+				&:before {
+					#{$left}: -6.7%;
+				}
+			}
+		}
+	}
+
+}
+
 @media (max-width: 991px) {
 
 	section.timeline .timeline-box {
@@ -189,7 +203,16 @@ section.timeline {
 
 }
 
-@media (max-width: 479px) {
+@media (max-width: 767px) {
+
+	section.timeline {
+		width: 100%;
+		margin: 0;
+	}
+
+}
+
+@media (max-width: 575px) {
 
 	section.timeline {
 		width: auto;

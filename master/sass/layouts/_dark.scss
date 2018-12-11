@@ -115,9 +115,6 @@ html.dark {
 	section.featured {
 		background-color: $color-darken-1;
 		border-top-color: $color-dark-4;
-		&.map {
-			background-image: url(../img/map-bottom-dark.png);	
-		}
 	}
 
 	section {
@@ -129,7 +126,7 @@ html.dark {
 
 	// Dropdown
 	.dropdown-menu > li {
-		> a {
+		a {
 			color: #FFF;
 			&:hover, &:focus, {
 				background-color: $color-dark-4;
@@ -305,7 +302,7 @@ html.dark {
 		}
 
 		&.featured {
-			@include background(linear-gradient(to bottom, $color-dark-3 1%, $color-dark-4 98%) repeat scroll 0 0 rgba(0, 0, 0, 0));
+			background: linear-gradient(to bottom, $color-dark-3 1%, $color-dark-4 98%) repeat scroll 0 0 rgba(0, 0, 0, 0);
 			border-bottom-color: $color-dark-4;
 			border-#{$left}-color: $color-dark-3;
 			border-#{$right}-color: $color-dark-3;
@@ -331,7 +328,7 @@ html.dark {
 		&.counters-text-dark {
 			.counter {
 				color: #FFF !important;
-				.fa, .icons, strong, label {
+				.fa, .fas, .far, .fal, .fab, .icons, strong, label {
 					color: #FFF !important;
 				}
 			}
@@ -342,11 +339,6 @@ html.dark {
 	section.timeline {
 		&:after {
 			background: rgb(80,80,80);
-			background: -moz-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(30,87,153,1)), color-stop(100%,rgba(125,185,232,1)));
-			background: -webkit-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-			background: -o-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
-			background: -ms-linear-gradient(top, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
 			background: linear-gradient(to bottom, rgba(80,80,80,0) 0%, rgb(80,80,80) 8%, rgb(80,80,80) 92%, rgba(80,80,80,0) 100%);
 		}
 		.timeline-date {
@@ -390,7 +382,7 @@ html.dark {
 	}
 
 	// Buttons
-	.btn-default {
+	.btn-light {
 		background-color: $color-dark-3;
 		border-color: $color-dark-3;
 		color: #FFF;
@@ -398,7 +390,12 @@ html.dark {
 
 	.btn.disabled,
 	.btn[disabled] {
-		border-color: $color-dark-3 !important;
+		&,
+		&:hover,
+		&:active,
+		&:focus {
+			border-color: $color-dark-3 !important;
+		}
 	}
 
 	// Pagination
@@ -422,6 +419,7 @@ html.dark {
 		}
 	}
 
+	// Home Concept
 	.home-concept {
 		background-image: url(../img/home-concept-dark.png);
 		.process-image {
@@ -447,15 +445,15 @@ html.dark {
 		background-color: lighten($color-dark, 8%);
 	}
 
-	// Panels
-	.panel-group {
-		.panel {
+	// cards
+	.accordion {
+		.card {
 			background-color: $color-dark-3;
 		}
-		.panel-default {
+		.card-default {
 			border-color: $color-dark-3;
 		}
-		.panel-heading {
+		.card-header {
 			background-color: $color-dark-4;
 		}
 
@@ -606,7 +604,7 @@ html.dark {
 
 	// Carousel
 	.owl-dots {
-		.owl-dot {
+		button.owl-dot {
 			span {
 				background: $color-dark-4;
 			}
@@ -703,6 +701,42 @@ html.dark {
 		}
 	}
 
+	// Popover
+	.popover {
+		background-color: $color-dark-4;
+		border: 1px solid $color-dark-3;
+		&.top > .arrow {
+			border-top-color: $color-dark-3;
+			&:after {
+				border-top-color: $color-dark-4;
+			}
+		}
+		&.right > .arrow {
+			border-right-color: $color-dark-3;
+			&:after {
+				border-right-color: $color-dark-4;
+			}
+		}
+		&.bottom > .arrow {
+			border-bottom-color: $color-dark-3;
+			&:after {
+				border-bottom-color: $color-dark-4;
+			}
+		}
+
+		&.left > .arrow {
+			border-left-color: $color-dark-3;
+			&:after {
+				border-left-color: $color-dark-4;
+			}
+		}
+	}
+
+	.popover-title {
+		background-color: $color-dark-3;
+		border-bottom: $color-dark-4;
+	}	
+
 	// Misc
 	.page-header {
 		border-bottom-color: $color-dark-3;
@@ -729,7 +763,7 @@ html.dark {
 		color: $color-font-default;
 	}
 
-	.show-grid [class*="col-md-"] .show-grid-block {
+	.show-grid [class*="col-lg-"] .show-grid-block {
 		background-color: $color-dark-3;
 		border-color: $color-dark-3;
 	}
@@ -746,9 +780,9 @@ html.dark {
 
 	// Divider Line
 	hr {
-		@include background-image(linear-gradient(left, transparent, #3F4247, transparent));
+		background-image: linear-gradient(to left, transparent, #3F4247, transparent);
 		&.light {
-			@include background-image(linear-gradient(left, transparent, #3F4247, transparent));
+			background-image: linear-gradient(to left, transparent, #3F4247, transparent);
 		}
 		&.solid {
 			background: #3F4247;
@@ -756,9 +790,9 @@ html.dark {
 	}
 
 	.divider {
-		@include background-image(linear-gradient(left, transparent, #3F4247, transparent));
+		background-image: linear-gradient(to left, transparent, #3F4247, transparent);
 
-		.fa, .icons {
+		.fa, .fas, .far, .fal, .fab, .icons {
 			background: $color-dark;
 		}
 
@@ -767,19 +801,19 @@ html.dark {
 		}
 
 		&.divider-style-2 {
-			.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				background: $color-dark-2;
 			}
 		}
 
 		&.divider-style-3 {
-			.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				border-color: #3F4247;
 			}
 		}
 
 		&.divider-style-4 {
-			.fa, .icons {
+			.fa, .fas, .far, .fal, .fab, .icons {
 				border-color: #3F4247;
 				&:after {
 					border-color: $color-dark-2;
@@ -974,23 +1008,35 @@ html.dark {
 		border-top-color: $color-dark-3;	
 	}
 
+	.popup-inline-content,
+	.mfp-content .ajax-container {
+		background: $dark-bg!important;
+	}
+
 	// Loading
 	.loading-overlay {
 		background: $dark-bg;
+	}
 
-		.loader {
-			&:after {
-				@include animation( animateLoaderAfterWhite 1s ease-in-out infinite );
-			}
+	.sort-destination-loader {
+		&:after {
+			background-color: $dark-bg;
 		}
 	}
 
 	// Footer
 	#footer {
-		.newsletter form .btn-default {
-			background-color: $color-dark-2;
-			border-color: $color-dark-2;
-			color: $color-font-default;
+		.newsletter {
+			form {
+				.btn-light {
+					background-color: $color-dark-2;
+					border-color: $color-dark-2;
+					color: $color-font-default;
+				}
+				.form-control {
+					border: 0;
+				}
+			}
 		}
 	}
 
@@ -1012,6 +1058,9 @@ html.dark {
 								li {
 									a {
 										border-bottom-color: $color-dark-4;
+										&:hover, &:focus, &.active, &:active {
+											background: $color-dark-4;
+										}
 									}
 								}
 							}
@@ -1027,6 +1076,15 @@ html.dark {
 									}
 								}
 							}
+						}
+					}
+				}
+
+				// Thumb Preview
+				a {
+					> .thumb-info-preview {
+						.thumb-info-wrapper {
+							background: $color-dark-4;
 						}
 					}
 				}
@@ -1084,9 +1142,9 @@ html.dark {
 
 		// Signin
 		.header-nav-main {
-			nav > {
-				ul > {
-					li.dropdown-mega-signin {
+			nav {
+				> ul {
+					> li.dropdown-mega-signin {
 						.dropdown-menu {
 							background-color: $dark-bg;
 						}
@@ -1105,10 +1163,32 @@ html.dark {
 		#header {
 
 			.header-nav-main {
+				&:before {
+					background-color: $dark-bg;
+				}
 				nav {
+					&::-webkit-scrollbar-thumb {
+					    border-color: transparent;
+					    background: #39404c;
+					}
 					> ul {
 						li {
 							border-bottom-color: $color-dark-4;
+						}
+						> li.dropdown-mega:not(.dropdown-full-color) {
+							.dropdown-mega-sub-title {
+								color: #FFF;
+							}
+						}
+					}
+					ul {
+						li {
+							a {
+								&:active {
+									background-color: #2e353e;
+									color: #FFF;
+								}
+							}
 						}
 					}
 				}
@@ -1127,6 +1207,11 @@ html.dark {
 				}
 
 			}
+		}
+
+		// Home Concept
+		.home-concept {
+			background-image: none;
 		}
 	}
 }

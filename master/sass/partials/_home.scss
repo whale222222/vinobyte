@@ -27,7 +27,7 @@ section.section-custom-map-2 {
 	background-color: #171717;
 	margin-bottom: 60px;
 	overflow: hidden;
-	padding: 20px 0 10px 0;
+	padding: 2.2rem 0;
 	position: relative;
 	text-align: $left;
 	p {
@@ -35,8 +35,7 @@ section.section-custom-map-2 {
 		display: inline-block;
 		font-size: 1.4em;
 		font-weight: 300;
-		max-width: 800px;
-		padding-top: 5px;
+		margin-bottom: 0;
 		span {
 			color: #999;
 			display: block;
@@ -49,10 +48,7 @@ section.section-custom-map-2 {
 		}
 	}
 	.get-started {
-		margin-top: 15px;
-		margin-bottom: 15px;
 		position: relative;
-		text-align: $right;
 		.btn {
 			position: relative;
 			z-index: 1;
@@ -96,6 +92,21 @@ section.section-custom-map-2 {
 }
 
 /* Responsive */
+@media (max-width: 991px) {
+	/* Home Intro */
+	.home-intro {
+		p {
+			margin-bottom: 2rem;
+		}
+	}
+
+	.home-intro-compact {
+		.get-started {
+			padding-#{$left}: 20px;
+		}
+	}
+}
+
 @media (max-width: 767px) {
 
 	/* Home Intro */
@@ -107,6 +118,79 @@ section.section-custom-map-2 {
 	}
 
 }
+/* Home Concept SVG Animations */
+@keyframes animatedLineBg {
+	from {
+		stroke-dasharray: 1000;
+	}
+	to {
+		stroke-dasharray: 1360;
+	}
+}
+
+@keyframes animatedLineSmallCircle {
+	from {
+		stroke-dasharray: 1000;
+	}
+	to {
+		stroke-dasharray: 1120;
+	}
+}
+
+@keyframes animatedLineBigCircle {
+	from {
+		stroke-dasharray: 1000;
+	}
+	to {
+		stroke-dasharray: 1266;
+	}
+}
+
+@keyframes animatedInitialPin {
+	0% {
+		transform: translate(2px, 69px) scale(0.23);
+	}
+	33% {
+		transform: translate(2px, 79px) scale(0.23);
+	}
+	66% {
+		transform: translate(2px, 74px) scale(0.23);
+	}
+	100% {
+		transform: translate(2px, 79px) scale(0.23);
+	}
+}
+
+@keyframes animatedFinalPin {
+	0% {
+		transform: translate(325px, -19px) scale(0.23) rotate(36deg);
+	}
+	33% {
+		transform: translate(325px, -13px) scale(0.23) rotate(36deg);
+	}
+	66% {
+		transform: translate(325px, -16px) scale(0.23) rotate(36deg);
+	}
+	100% {
+		transform: translate(325px, -13px) scale(0.23) rotate(36deg);
+	}
+}
+
+/* Firefox Final Pin Animation */
+@keyframes animatedFinalPinFirefox {
+	0% {
+		transform: translate(193px, -16px) scale(0.23) rotate(36deg);
+	}
+	33% {
+		transform: translate(193px, -10px) scale(0.23) rotate(36deg);
+	}
+	66% {
+		transform: translate(193px, -13px) scale(0.23) rotate(36deg);
+	}
+	100% {
+		transform: translate(193px, -10px) scale(0.23) rotate(36deg);
+	}
+}
 
 /* Home Concept */
 .home-concept {
@@ -117,7 +201,7 @@ section.section-custom-map-2 {
 		display: block;
 		font-family: $font-secondary;
 		font-size: 2.1em;
-		font-weight: normal;
+		font-weight: normal !important;
 		position: relative;
 		margin-top: 30px;
 	}
@@ -176,7 +260,7 @@ section.section-custom-map-2 {
 @media (max-width: 991px) {
 
 	.home-concept {
-		background: none;
+		background-image: none;
 		.project-image {
 			margin: 20px auto 0 auto;
 		}
