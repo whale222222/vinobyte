@@ -2,7 +2,7 @@ var options1 = {
   imgSrc1:"../fotki/kola.jpg",
   imgSrc2:"../fotki/kola-greyscale.jpg",
   containerName : "VenetianBlindsAnimation-kola",
-  columns:16,
+  columns:8,
   margin:1
 }
 
@@ -10,7 +10,7 @@ var options2 = {
   imgSrc1:"../fotki/sasha.jpg",
   imgSrc2:"../fotki/sasha-greyscale.jpg",
   containerName : "VenetianBlindsAnimation-sasha",
-  columns:16,
+  columns:8,
   margin:1
 }
 
