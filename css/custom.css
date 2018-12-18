@@ -14,3 +14,7 @@
     color: #fff;
     background: #D7624E;
 }
+
+.logo-link:hover {
+    text-decoration: none;
+}
