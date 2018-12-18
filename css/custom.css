@@ -18,3 +18,15 @@
 .logo-link:hover {
     text-decoration: none;
 }
+
+@media screen and (max-width: 640px) {
+    [id^=revolutionSlider] {
+        height: 300px !important;
+    }
+}
+
+@media screen and (max-width: 1007px) and (min-width: 641px) {
+    [id^=revolutionSlider] {
+        height: 500px !important;
+    }
+}
