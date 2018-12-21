@@ -12,7 +12,7 @@ namespace DrewM\MailChimp;
  */
 class MailChimp
 {
-    private $api_key = '3df16d06637737df496b01de731cfb3e-us7';
+    private $api_key;
     private $api_endpoint = 'https://<dc>.api.mailchimp.com/3.0';
 
     const TIMEOUT = 10;
