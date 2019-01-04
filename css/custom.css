@@ -17,6 +17,10 @@
     filter: grayscale(0%);
 }
 
+.owl-item {
+    -webkit-user-drag: element;
+}
+
 /* #logo-svg {
     width: 213px; 
     height: 173px;
