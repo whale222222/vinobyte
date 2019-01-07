@@ -46,6 +46,20 @@
     filter: blur(1px);
 }
 
+ul.history li .featured-box {
+    margin-left: 0;
+}
+
+ul.history li:nth-child(even) {
+    margin-left: 50px;
+    margin-right: 0;
+}
+
+ul.history li:nth-child(odd) {
+    margin-left: 0;
+    margin-right: 50px;
+}
+
 /* #logo-svg {
     width: 213px; 
     height: 173px;
