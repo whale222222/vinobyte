@@ -21,6 +21,31 @@
     -webkit-user-drag: element;
 }
 
+.front-content {
+    position: relative;
+}
+
+.front-content span {
+    background: rgba(42, 33, 33, 0.53);
+    border-radius: 20px;
+    position: absolute;
+    color: #fff;
+    font-size: 45px;
+    font-weight: 700;
+    height: 290px;
+    width: 400px;
+    line-height: 60px;
+    left: 50%;
+    margin-left: -50px;
+    top: 50%;
+    margin-top: -50px;
+    padding: 25px;
+}
+
+.front-content img {
+    filter: blur(1px);
+}
+
 /* #logo-svg {
     width: 213px; 
     height: 173px;
