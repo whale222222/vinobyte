@@ -21,20 +21,27 @@
     -webkit-user-drag: element;
 }
 
-/* #logo-svg {
-    width: 213px; 
-    height: 173px;
-    display: inline-flex;
-    background-repeat: no-repeat;
-    background-image: url("data:image/svg+xml,<svg width='313' height='373' viewBox='0 0 600 1500' xmlns='http://www.w3.org/2000/svg'> <g> <title>background</title> <rect fill='#fff' id='canvas_background' height='375' width='315' y='-1' x='-1'/> <g display='none' overflow='visible' y='0' x='0' height='100%' width='100%' id='canvasGrid'> <rect fill='url(#gridpattern)' stroke-width='0' y='0' x='0' height='100%' width='100%'/> </g> </g> <g> <title>Vinobyte</title> <ellipse ry='37' rx='37' id='svg_1' cy='134.4375' cx='44.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_2' cy='134.4375' cx='118.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_3' cy='136.4375' cx='193.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_4' cy='200.4375' cx='80.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_5' cy='136.4375' cx='268.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_6' cy='201.4375' cx='229.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_7' cy='265.4375' cx='115.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_8' cy='200.4375' cx='154.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_9' cy='265.4375' cx='190.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse ry='37' rx='37' id='svg_10' cy='329.4375' cx='153.5' stroke-width='12.5' stroke='#fff' fill='#000'/> <ellipse stroke='#000' transform='rotate(-60 182.67404174804688,59.636054992675795) ' ry='24.897115' rx='55.5' id='svg_11' cy='59.636055' cx='182.674041' fill-opacity='null' stroke-opacity='null' stroke-width='1' fill='#000'/> <ellipse stroke='#000' transform='rotate(-121 129.67404174804688,58.63605499267578) ' ry='24.897115' rx='55.5' id='svg_12' cy='58.636055' cx='129.674041' fill-opacity='null' stroke-opacity='null' stroke-width='1' fill='#000'/> </g> </svg>");
-} */
-
 #footer .footer-copyright p, .footer-misc {
     color: #fff;
 }
 
 .logo-link:hover {
     text-decoration: none;
+}
+
+.logo-link h2 {
+    color: #fff !important;
+    font-weight: 700;
+}
+
+.header-nav-main nav > ul > li > a.active {
+    color: #fff !important;
+    text-decoration: underline;
+    text-underline-position: under;
+}
+
+.slider-container {
+    background-color: #fff;
 }
 
 @media screen and (max-width: 640px) {
@@ -54,18 +61,16 @@
 }
 
 .tech_stack {
-    margin: 0%;
-    
     display: flex;
-   justify-content: center;
-   flex-wrap: wrap;
-   align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
     
 }
 
 .tech_stack_item {
     min-width: 0;
-   margin: 20px;
+    margin: 20px;
 }
 
 .tech_stack_item img {
