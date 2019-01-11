@@ -70,12 +70,16 @@
 
 .tech_stack_item {
     min-width: 0;
-    margin: 20px;
+    margin: 35px;
 }
 
 .tech_stack_item img {
-    width: 100px;
+    width: 80px;
    max-width: 100%; 
    max-height: 100px;
     
+}
+
+#footer .container .row > div {
+    margin-bottom: 0px;
 }
