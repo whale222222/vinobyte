@@ -44,7 +44,7 @@
     background-color: #fff;
 }
 
-@media screen and (max-width: 640px) {
+/* @media screen and (max-width: 640px) {
     [id^=revolutionSlider] {
         height: 300px !important;
     }
@@ -54,7 +54,7 @@
     [id^=revolutionSlider] {
         height: 500px !important;
     }
-}
+} */
 
 #footer a:hover {
     text-decoration: none;
@@ -82,4 +82,8 @@
 
 #footer .container .row > div {
     margin-bottom: 0px;
+}
+
+body {
+    background-color: black !important;
 }
