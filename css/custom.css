@@ -45,13 +45,26 @@
     background-color: #fff;
 }
 
-/* @media screen and (max-width: 640px) {
-    [id^=revolutionSlider] {
+@media screen and (max-width: 860px) {
+    /* [id^=revolutionSlider] {
         height: 300px !important;
+    } */
+    .tech_stack .tech_stack_item {
+        margin: 10px;
+        width: 50px;
     }
 }
 
-@media screen and (max-width: 1007px) and (min-width: 641px) {
+.forcefullwidth_wrapper_tp_banner {
+    background-color: #000;
+}
+
+.header-common {
+    height: 100vh !important;
+}
+
+
+/* @media screen and (max-width: 1007px) and (min-width: 641px) {
     [id^=revolutionSlider] {
         height: 500px !important;
     }
@@ -101,4 +114,8 @@ h2 {
 
 .mt-5, .my-5 {
     margin-top: 0;
+}
+
+.white {
+    color: #fff !important;
 }
