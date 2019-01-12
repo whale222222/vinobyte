@@ -119,3 +119,7 @@ h2 {
 .white {
     color: #fff !important;
 }
+
+#home-intro{
+    background-image: url('../img/slides/background110.png');
+}
