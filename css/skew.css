@@ -1,0 +1,30 @@
+.bg-skew {
+    background: tomato;
+    -webkit-transform: skew(0deg, -10deg);
+    transform: skew(0deg, -10deg);
+    padding: 200px 0;
+    margin-top: -190px;
+    height: 500px;
+    opacity: 0.8;
+    box-shadow: darkred inset 0px -44px 0 0;
+    
+}
+.bg-skew1 {
+    background: rgb(203, 15, 15);
+    -webkit-transform: skew(-10deg, 0deg);
+    transform: skew(-40deg, 10deg);
+    padding: 100px 0;
+    margin-top: -100px;
+    height: 200px;
+    opacity:0.5;
+    box-shadow: rgb(255, 140, 0) inset 0 0 0 0;
+}
+.bg-skew2 {
+    background: rgb(210, 30, 63);
+    -webkit-transform: skew(0deg, -10deg);
+    transform: skew(0deg, -10deg);
+    padding: 100px 0;
+    margin-top: -50px;
+    height: 100px;
+    opacity: 0.5;
+}
