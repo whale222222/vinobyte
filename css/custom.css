@@ -41,10 +41,6 @@
     text-underline-position: under;
 }
 
-.slider-container {
-    background-color: #fff;
-}
-
 @media screen and (max-width: 860px) {
     /* [id^=revolutionSlider] {
         height: 300px !important;
@@ -98,7 +94,7 @@
 
 .tech_stack_item {
     min-width: 0;
-    margin: 35px;
+    margin: 25px;
 }
 
 .tech_stack_item img {
@@ -120,6 +116,7 @@ h2 {
     color: #fff !important;
 }
 
-#home-intro{
+#home-intro {
     background-image: url('../img/slides/background110.png');
+    margin-bottom: 0;
 }
