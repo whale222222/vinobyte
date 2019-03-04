@@ -121,3 +121,7 @@ h2 {
     background-image: url('../img/slides/background110.png');
     margin-bottom: 0;
 }
+
+.tp-caption.main-label {
+    line-height: 80px !important;
+}
