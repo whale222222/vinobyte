@@ -125,3 +125,7 @@ h2 {
 .tp-caption.main-label {
     line-height: 80px !important;
 }
+
+.recent-posts {
+    display: inherit;
+}
