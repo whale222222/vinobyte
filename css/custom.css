@@ -65,6 +65,26 @@
         height: 500px !important;
     }
 } */
+@media screen and (max-width: 999px) {
+    #contact-image {
+        width: 250px;
+    }
+}
+
+@media screen and (min-width: 1000px) and (max-width: 1200px) {
+    #contact-image {
+        width: 450px;
+    }
+}
+
+@media screen and (max-width: 770px) {
+    #hide-concat-image {
+        display: none;
+    }
+    #contact-info {
+        justify-content: start!important;
+    }
+}
 
 #footer  {
     padding: 0 !important;
