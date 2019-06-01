@@ -86,6 +86,12 @@
     }
 }
 
+@media screen and (max-width: 350px) {
+    #particles-container {
+      min-height: 250px;
+    }
+}
+
 #footer  {
     padding: 0 !important;
 }
