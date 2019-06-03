@@ -1,3 +1,5 @@
-particlesJS.load('particles-js', 'js/particles-js/particlesjs-config.json', function() {
-    console.log('callback - particles.js config loaded');
-});
+particlesJS.load('particles-js', 'js/particles-js/particlesjs-config.json', function() { });
+
+setTimeout(() => {
+    window.dispatchEvent(new Event('resize'));
+}, 500);
